@@ -18,6 +18,9 @@
         <span class="navbar-text">
             <a *ngIf="!isLogged()" [routerLink]="['/login']">Login<span class="sr-only">(current)</span></a>
         </span>
+        <span class="navbar-text">
+            <a *ngIf="!isLogged()" [routerLink]="['/signup']">SignUp<span class="sr-only">(current)</span></a>
+        </span>
         <span class="navbar-text" *ngIf="isLogged()">
             Hola {{user.name}}
           </span>
