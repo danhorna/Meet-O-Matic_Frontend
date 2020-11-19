@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="h1">Desde aca podras ver tus eventos creados</div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of myEvents; index as i">
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{item['name']}}
+                </td>
+                <td>
+                    OPCIONES
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

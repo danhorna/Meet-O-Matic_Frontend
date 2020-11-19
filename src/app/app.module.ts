@@ -16,6 +16,7 @@ import { CreateComponent } from './components/routes/create/create.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CreatedComponent } from './components/routes/create/created/created.component';
+import { ProfileComponent } from './components/routes/profile/profile.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { CreatedComponent } from './components/routes/create/created/created.com
     LoginComponent,
     SignupComponent,
     CreateComponent,
-    CreatedComponent
+    CreatedComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
