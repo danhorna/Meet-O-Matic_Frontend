@@ -10,6 +10,13 @@ import { TokenserviceService } from './services/tokenservice.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './components/routes/signup/signup.component';
+import { CreateComponent } from './components/routes/create/create.component';
+
+// Date picker
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CreatedComponent } from './components/routes/create/created/created.component';
+
 
 @NgModule({
   declarations: [
@@ -17,13 +24,18 @@ import { SignupComponent } from './components/routes/signup/signup.component';
     IndexComponent,
     NavbarComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    CreateComponent,
+    CreatedComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    BrowserAnimationsModule
   ],
   providers: [
     TokenserviceService

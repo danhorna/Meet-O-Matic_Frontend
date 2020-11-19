@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
-    <a class="navbar-brand" href="#">Meet-O-Matic</a>
+    <a class="navbar-brand" [routerLink]="['/']">Meet-O-Matic</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                <a class="nav-link" [routerLink]="['/']">Inicio <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active" *ngIf="isLogged()">
-                <a class="nav-link" href="/create">Crear<span class="sr-only">(current)</span></a>
+                <a class="nav-link" [routerLink]="['/create']">Crear<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active" *ngIf="isLogged()">
                 <a class="nav-link" href="/profile">Perfil<span class="sr-only">(current)</span></a>
@@ -25,7 +25,7 @@
             Hola {{user.name}}
           </span>
         <span class="navbar-text">
-            <button *ngIf="isLogged()" class="btn-unstyled" [routerLink]="['/signup']">Logout</button>
+            <button *ngIf="isLogged()" class="btn-unstyled" (click)="logout()">Logout</button>
         </span>
     </div>
 </nav>

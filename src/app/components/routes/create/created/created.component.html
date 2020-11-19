@@ -1,0 +1,7 @@
+<div class="container" *ngIf="this.eventCreated != null"> <!--Evitamos que al primer pintado encuentre undefined-->
+    <h2>Evento creado exitosamente</h2>
+    <h5>Puede compartir el siguiente link: </h5>
+    <a href="/events/{{this.eventCreated['id']}}">Este link</a>
+    <h5>Con la siguiente contraseña:</h5>
+    <p>{{this.eventCreated['password']}}</p>
+</div>
