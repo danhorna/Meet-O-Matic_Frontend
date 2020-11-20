@@ -10,14 +10,16 @@
  * Do not edit the class manually.
  */
 
+
 /**
  * (tsType: @loopback/repository-json-schema#Optional<Omit<Event, \'id\'>, \'usereventId\'>, schemaOptions: { title: \'NewEventInUserevent\', exclude: [ \'id\' ], optional: [ \'usereventId\' ] })
  */
 export interface NewEventInUserevent { 
+    dates: Array<object>;
     name: string;
     description: string;
-    dates: Array<any>;
     password: string;
     usereventId?: string;
+    creationDate: string;
 }
 

@@ -10,12 +10,14 @@
  * Do not edit the class manually.
  */
 
+
 export interface Event { 
+    dates: Array<object>;
     id?: string;
     name: string;
     description: string;
-    dates: Array<any>;
     password: string;
     usereventId?: string;
+    creationDate: string;
 }
 

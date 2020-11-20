@@ -15,10 +15,11 @@
  * (tsType: Omit<Event, \'id\'>, schemaOptions: { title: \'NewEvent\', exclude: [ \'id\' ] })
  */
 export interface NewEvent { 
+    dates: Array<object>;
     name: string;
     description: string;
-    dates: Array<any>;
     password: string;
     usereventId?: string;
+    creationDate: string;
 }
 

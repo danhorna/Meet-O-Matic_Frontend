@@ -15,11 +15,12 @@
  * (tsType: Partial<Event>, schemaOptions: { partial: true })
  */
 export interface EventPartial { 
+    dates?: Array<object>;
     id?: string;
     name?: string;
     description?: string;
-    dates?: Array<any>;
     password?: string;
     usereventId?: string;
+    creationDate?: string;
 }
 

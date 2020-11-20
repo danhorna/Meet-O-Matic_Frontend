@@ -31,15 +31,19 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  convertDate(aDate: Date): String {
-    return aDate.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' })
+  convertDate(aDate: string): String {
+    const aux = new Date(aDate)
+    return aux.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' })
   }
 
   addDate(aDate: Array<Date>) {
     if (aDate[0] instanceof Date && aDate[1] instanceof Date) {
       document.getElementById("datepicker").classList.add("d-none")
       document.getElementById("datearray").classList.add("d-none")
-      this.createForm.value.dates.push(aDate)
+      var toObj = {}
+      for (var i = 0; i < aDate.length; i++)
+        toObj[i] = (aDate[i]).toString()
+      this.createForm.value.dates.push(toObj)
     }
     else
       document.getElementById("datepicker").classList.remove("d-none")
@@ -56,8 +60,10 @@ export class CreateComponent implements OnInit {
           name: this.createForm.value.name,
           description: this.createForm.value.description,
           dates: this.createForm.value.dates,
-          password: this.createForm.value.password
+          password: this.createForm.value.password,
+          creationDate: new Date().toString()
         }
+        console.log(toSend)
         if (this.tokenService.isValid()) {
           const user = this.tokenService.getUser()
           // Agregar manejo de cant de form
