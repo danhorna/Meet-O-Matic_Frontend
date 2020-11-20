@@ -75,7 +75,6 @@ export class CreateComponent implements OnInit {
         }
         if (this.tokenService.isValid()) {
           const user = this.tokenService.getUser()
-          // Agregar manejo de cant de form
           this.userController.usereventEventControllerFind(user.id).subscribe((res)=>{
             var contador = 0
             for (var i = 0; i < res.length; i++){

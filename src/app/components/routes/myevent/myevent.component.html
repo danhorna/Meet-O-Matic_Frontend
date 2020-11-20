@@ -1,4 +1,10 @@
 <div *ngIf="this.eventExists && this.accessible">
-    EL evento existe y es mio
+    <div class="card border-secondary mb-3" style="max-width: 18rem;">
+        <div class="card-header">{{theEvent['name']}}</div>
+        <div class="card-body text-secondary">
+            <p class="card-text">Respuestas: {{this.cantResponses}}</p>
+            <p>Acciones:</p>
+        </div>
+    </div>
 </div>
 <div *ngIf="!this.eventExists || !this.accessible">EL evento no existe o no te pertenece</div>

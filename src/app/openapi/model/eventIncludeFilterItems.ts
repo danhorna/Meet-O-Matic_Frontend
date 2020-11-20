@@ -9,15 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { EventIncludeFilterItems } from './eventIncludeFilterItems';
+import { EventScopeFilter } from './eventScopeFilter';
 
 
-export interface EventFilter { 
-    offset?: number;
-    limit?: number;
-    skip?: number;
-    order?: string | Array<string>;
-    fields?: object | Array<string>;
-    include?: Array<EventIncludeFilterItems>;
+export interface EventIncludeFilterItems { 
+    relation?: string;
+    scope?: EventScopeFilter;
 }
 

@@ -9,15 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { EventIncludeFilterItems } from './eventIncludeFilterItems';
 
 
-export interface EventFilter { 
-    offset?: number;
-    limit?: number;
-    skip?: number;
-    order?: string | Array<string>;
-    fields?: object | Array<string>;
-    include?: Array<EventIncludeFilterItems>;
+/**
+ * (tsType: ResponseWithRelations, schemaOptions: { includeRelations: true })
+ */
+export interface ResponseWithRelations { 
+    eventId: string;
+    prefdates: Array<object>;
+    name: string;
+    message?: string;
+    id?: string;
 }
 

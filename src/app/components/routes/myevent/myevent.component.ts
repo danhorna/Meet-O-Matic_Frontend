@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EventControllerService} from 'src/app/openapi';
+import { EventControllerService, EventResponseControllerService} from 'src/app/openapi';
 import { TokenserviceService } from 'src/app/services/tokenservice.service';
 
 @Component({
@@ -12,11 +12,14 @@ export class MyeventComponent implements OnInit {
 
   eventExists: boolean
   accessible: boolean
-  
+  cantResponses: number
+  theEvent : Object
+
   constructor(
     private eventController: EventControllerService,
     private route: ActivatedRoute,
-    private tokenService: TokenserviceService
+    private tokenService: TokenserviceService,
+    private responseController: EventResponseControllerService
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +28,10 @@ export class MyeventComponent implements OnInit {
       this.eventExists = true
       const user = this.tokenService.getUser()
       if (user.id == res['usereventId']){
+        this.theEvent = res
+        this.responseController.eventResponseControllerFind(id).subscribe((res)=>{
+          this.cantResponses = res.length
+        })
         this.accessible = true
       }
       else{
@@ -36,5 +43,7 @@ export class MyeventComponent implements OnInit {
     }
     )
   }
+
+  
 
 }

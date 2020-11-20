@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { ResponseWithRelations } from './responseWithRelations';
 
 
 /**
@@ -22,5 +23,6 @@ export interface EventWithRelations {
     password: string;
     usereventId?: string;
     creationDate: string;
+    responses?: Array<ResponseWithRelations>;
 }
 

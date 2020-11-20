@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { EventControllerService } from './api/eventController.service';
+import { EventResponseControllerService } from './api/eventResponseController.service';
 import { PingControllerService } from './api/pingController.service';
 import { UserControllerService } from './api/userController.service';
 import { UsereventEventControllerService } from './api/usereventEventController.service';
