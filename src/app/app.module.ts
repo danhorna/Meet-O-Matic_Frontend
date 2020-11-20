@@ -7,7 +7,7 @@ import { IndexComponent } from './components/routes/index/index.component';
 import { NavbarComponent } from './components/resources/navbar/navbar.component';
 import { LoginComponent } from './components/routes/login/login.component';
 import { TokenserviceService } from './services/tokenservice.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './components/routes/signup/signup.component';
 import { CreateComponent } from './components/routes/create/create.component';

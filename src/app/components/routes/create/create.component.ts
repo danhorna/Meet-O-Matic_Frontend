@@ -12,7 +12,9 @@ export class CreateComponent implements OnInit {
 
   createForm: FormGroup
   created: boolean = false
-  eventCreated
+  eventCreated: Object
+  exceeded: boolean = false
+  
   constructor(
     private createFormBuilder: FormBuilder,
     private tokenService: TokenserviceService,
@@ -53,6 +55,14 @@ export class CreateComponent implements OnInit {
     this.createForm.value.dates.splice(index, 1)
   }
 
+  compareWithToday(aDate): boolean{
+    var aux = new Date(aDate)
+    const today = new Date()
+    const todayMonth = today.getMonth()
+    const todayYear = today.getFullYear()
+    return (todayMonth == aux.getMonth() && todayYear == aux.getFullYear())
+  }
+
   theSubmit() {
     if (this.createForm.valid) {
       if (this.createForm.value.dates.length > 0) {
@@ -63,20 +73,34 @@ export class CreateComponent implements OnInit {
           password: this.createForm.value.password,
           creationDate: new Date().toString()
         }
-        console.log(toSend)
         if (this.tokenService.isValid()) {
           const user = this.tokenService.getUser()
           // Agregar manejo de cant de form
-          this.userController.usereventEventControllerCreate(user.id,toSend).subscribe((res) => {
-              this.eventCreated = res
-            })
+          this.userController.usereventEventControllerFind(user.id).subscribe((res)=>{
+            var contador = 0
+            for (var i = 0; i < res.length; i++){
+              if (this.compareWithToday(res[i]['creationDate']))
+                contador++
+            }
+            if (contador < 10){
+              console.log(contador)
+              this.userController.usereventEventControllerCreate(user.id,toSend).subscribe((res) => {
+                this.eventCreated = res
+                this.created = true
+              })
+            }
+            else{
+              this.exceeded = true
+            }
+          })
+          
         }
         else {
           this.eventController.eventControllerCreate(toSend).subscribe((res) => {
             this.eventCreated = res
+            this.created = true
           })
         }
-        this.created = true
       }
       else
         document.getElementById("datearray").classList.remove("d-none")

@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!this.created">
+<div class="container" *ngIf="!this.created && !this.exceeded">
   <form class="col-sm-6" [formGroup]="createForm">
     <div class="form-group">
       <label for="name">Nombre: <span class="text-danger"
@@ -64,4 +64,5 @@
     <button type="button" class="btn btn-primary" [disabled]="createForm.invalid" (click)="theSubmit()">Submit</button>
   </form>
 </div>
-<app-created *ngIf="this.created" [eventCreated]="eventCreated"></app-created>
+<app-created *ngIf="this.created && !this.exceeded" [eventCreated]="eventCreated"></app-created>
+<div *ngIf="this.exceeded" class="text-danger">Ya excediste la cantidad maxima(10) de formularios por mes</div>
