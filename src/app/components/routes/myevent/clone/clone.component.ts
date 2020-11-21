@@ -1,36 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EventControllerService, UsereventEventControllerService } from 'src/app/openapi';
+import { UsereventEventControllerService } from 'src/app/openapi';
 import { TokenserviceService } from 'src/app/services/tokenservice.service';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  selector: 'app-clone',
+  templateUrl: './clone.component.html',
+  styleUrls: ['./clone.component.css']
 })
-export class CreateComponent implements OnInit {
+export class CloneComponent implements OnInit {
 
-  createForm: FormGroup
+  @Input() theEvent: Object
+
+  cloneForm: FormGroup
+  exceeded: boolean = false
   created: boolean = false
   eventCreated: Object
-  exceeded: boolean = false
-  
+
   constructor(
-    private createFormBuilder: FormBuilder,
+    private cloneFormBuilder: FormBuilder,
     private tokenService: TokenserviceService,
-    private userController: UsereventEventControllerService,
-    private eventController: EventControllerService
-  ) {
-    this.createForm = this.createFormBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      password: ['', Validators.required],
-      date: [''],
-      dates: new FormArray([])
-    })
-  }
+    private userController: UsereventEventControllerService
+  ) { }
 
   ngOnInit(): void {
+    this.cloneForm = this.cloneFormBuilder.group({
+      name: [this.theEvent['name'], Validators.required],
+      description: [this.theEvent['description'], Validators.required],
+      password: ['', Validators.required],
+      date: [''],
+      dates: [this.theEvent['dates']]
+    })
   }
 
   convertDate(aDate: string): String {
@@ -45,14 +45,14 @@ export class CreateComponent implements OnInit {
       var toObj = {}
       for (var i = 0; i < aDate.length; i++)
         toObj[i] = (aDate[i]).toString()
-      this.createForm.value.dates.push(toObj)
+      this.cloneForm.value.dates.push(toObj)
     }
     else
       document.getElementById("datepicker").classList.remove("d-none")
   }
 
   removeDate(index: number) {
-    this.createForm.value.dates.splice(index, 1)
+    this.cloneForm.value.dates.splice(index, 1)
   }
 
   compareWithToday(aDate): boolean{
@@ -64,13 +64,13 @@ export class CreateComponent implements OnInit {
   }
 
   theSubmit() {
-    if (this.createForm.valid) {
-      if (this.createForm.value.dates.length > 0) {
+    if (this.cloneForm.valid) {
+      if (this.cloneForm.value.dates.length > 0) {
         const toSend = {
-          name: this.createForm.value.name,
-          description: this.createForm.value.description,
-          dates: this.createForm.value.dates,
-          password: this.createForm.value.password,
+          name: this.cloneForm.value.name,
+          description: this.cloneForm.value.description,
+          dates: this.cloneForm.value.dates,
+          password: this.cloneForm.value.password,
           creationDate: new Date().toString()
         }
         if (this.tokenService.isValid()) {
@@ -91,19 +91,15 @@ export class CreateComponent implements OnInit {
               this.exceeded = true
             }
           })
-          
         }
-        else {
-          this.eventController.eventControllerCreate(toSend).subscribe((res) => {
-            this.eventCreated = res
-            this.created = true
-          })
+        else{
+          console.log('No estas logueado')
         }
       }
       else
-        document.getElementById("datearray").classList.remove("d-none")
+      document.getElementById("datearray").classList.remove("d-none")
     }
-    else {
+    else{
       console.log('error')
     }
   }

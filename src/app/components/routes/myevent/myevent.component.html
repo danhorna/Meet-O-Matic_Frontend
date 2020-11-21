@@ -1,10 +1,58 @@
-<div *ngIf="this.eventExists && this.accessible">
+<div *ngIf="this.eventExists && this.accessible && !this.toClone">
     <div class="card border-secondary mb-3" style="max-width: 18rem;">
-        <div class="card-header">{{theEvent['name']}}</div>
+        <div class="card-header">{{this.theEvent['name']}}</div>
         <div class="card-body text-secondary">
             <p class="card-text">Respuestas: {{this.cantResponses}}</p>
-            <p>Acciones:</p>
+            <span>Acciones:</span>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#enable" *ngIf="!this.theEvent['active']">
+                Habilitar
+            </button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#disable" *ngIf="this.theEvent['active']">
+                Deshabilitar
+            </button>
+            <button type="button" class="btn btn-info" (click)="clone()">Clonar</button>
+        </div>
+    </div>
+    <div class="modal fade" id="enable" tabindex="-1" role="dialog"
+        aria-labelledby="enableTitle" aria-hidden="true" *ngIf="!this.theEvent['active']">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enableLongTitle">Habilitar formulario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Estás apunto de habilitar el formulario: <strong>{{this.theEvent['name']}}</strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" (click)="enable()" data-dismiss="modal">Habilitar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="disable" tabindex="-1" role="dialog"
+        aria-labelledby="disableTitle" aria-hidden="true" *ngIf="this.theEvent['active']">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="disableLongTitle">Deshabilitar formulario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Estás apunto de deshabilitar el formulario: <strong>{{this.theEvent['name']}}</strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="disable()" data-dismiss="modal">Deshabilitar</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <div *ngIf="!this.eventExists || !this.accessible">EL evento no existe o no te pertenece</div>
+<app-clone *ngIf="this.toClone" [theEvent]="this.theEvent"></app-clone>

@@ -18,6 +18,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CreatedComponent } from './components/routes/create/created/created.component';
 import { ProfileComponent } from './components/routes/profile/profile.component';
 import { MyeventComponent } from './components/routes/myevent/myevent.component';
+import { CloneComponent } from './components/routes/myevent/clone/clone.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MyeventComponent } from './components/routes/myevent/myevent.component'
     CreateComponent,
     CreatedComponent,
     ProfileComponent,
-    MyeventComponent
+    MyeventComponent,
+    CloneComponent
   ],
   imports: [
     BrowserModule,

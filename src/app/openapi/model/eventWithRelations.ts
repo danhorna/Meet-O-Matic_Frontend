@@ -17,6 +17,7 @@ import { ResponseWithRelations } from './responseWithRelations';
  */
 export interface EventWithRelations { 
     dates: Array<object>;
+    active?: boolean;
     id?: string;
     name: string;
     description: string;

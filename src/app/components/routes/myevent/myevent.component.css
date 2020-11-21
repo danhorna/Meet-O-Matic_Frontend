@@ -1,0 +1,11 @@
+.lock {
+    color: maroon;
+}
+
+.unlock {
+    color: green;
+}
+
+.clone {
+    color: indigo;
+}

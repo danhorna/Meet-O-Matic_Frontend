@@ -16,6 +16,7 @@
  */
 export interface NewEventInUserevent { 
     dates: Array<object>;
+    active?: boolean;
     name: string;
     description: string;
     password: string;

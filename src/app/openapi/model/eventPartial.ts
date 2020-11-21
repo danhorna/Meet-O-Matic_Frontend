@@ -16,6 +16,7 @@
  */
 export interface EventPartial { 
     dates?: Array<object>;
+    active?: boolean;
     id?: string;
     name?: string;
     description?: string;
