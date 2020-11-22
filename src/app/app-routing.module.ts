@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateComponent } from './components/routes/create/create.component';
+import { EventComponent } from './components/routes/event/event.component';
 
 // Components
 import { IndexComponent } from './components/routes/index/index.component';
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent},
   { path: 'create', component: CreateComponent},
   { path: 'profile', component: ProfileComponent},
-  { path: 'myevent/:id', component: MyeventComponent}
+  { path: 'myevent/:id', component: MyeventComponent},
+  { path: 'event/:id', component: EventComponent}
 ];
 
 @NgModule({

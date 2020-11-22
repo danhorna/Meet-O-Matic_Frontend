@@ -19,6 +19,7 @@ import { CreatedComponent } from './components/routes/create/created/created.com
 import { ProfileComponent } from './components/routes/profile/profile.component';
 import { MyeventComponent } from './components/routes/myevent/myevent.component';
 import { CloneComponent } from './components/routes/myevent/clone/clone.component';
+import { EventComponent } from './components/routes/event/event.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CloneComponent } from './components/routes/myevent/clone/clone.componen
     CreatedComponent,
     ProfileComponent,
     MyeventComponent,
-    CloneComponent
+    CloneComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,
