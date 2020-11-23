@@ -7,8 +7,8 @@ import { EventControllerService } from './api/eventController.service';
 import { EventResponseControllerService } from './api/eventResponseController.service';
 import { PingControllerService } from './api/pingController.service';
 import { UserControllerService } from './api/userController.service';
+import { UsereventControllerService } from './api/usereventController.service';
 import { UsereventEventControllerService } from './api/usereventEventController.service';
-import { UsereventUserCredentialsControllerService } from './api/usereventUserCredentialsController.service';
 
 @NgModule({
   imports:      [],

@@ -9,12 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { UserCredentialsWithRelations } from './userCredentialsWithRelations';
+import { EventWithRelations } from './eventWithRelations';
 
 
-export interface Userevent { 
+/**
+ * (tsType: UsereventWithRelations, schemaOptions: { includeRelations: true })
+ */
+export interface UsereventWithRelations { 
     name: string;
     email: string;
     id?: string;
     premium?: boolean;
+    events?: Array<EventWithRelations>;
+    userCredentials?: UserCredentialsWithRelations;
 }
 

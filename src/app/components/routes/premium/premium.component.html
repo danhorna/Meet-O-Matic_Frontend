@@ -1,2 +1,7 @@
-<h1>Ser premium por U$D 0.01!</h1>
-<ngx-paypal [config]="payPalConfig"></ngx-paypal>
+<div class="container" *ngIf="!this.premiumUser">
+    <h1>Ser premium por U$D 0.01!</h1>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+</div>
+<div class="container" *ngIf="this.premiumUser">
+    Ya eres usuario premium!
+</div>

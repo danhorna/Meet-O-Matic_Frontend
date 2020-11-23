@@ -17,10 +17,10 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { LoopbackCount } from '../model/models';
-import { NewUserCredentialsInUserevent } from '../model/models';
-import { UserCredentials } from '../model/models';
-import { UserCredentialsPartial } from '../model/models';
+import { UsereventFilter } from '../model/models';
+import { UsereventFilter1 } from '../model/models';
+import { UsereventPartial } from '../model/models';
+import { UsereventWithRelations } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class UsereventUserCredentialsControllerService {
+export class UsereventControllerService {
 
     protected basePath = 'http://localhost:3000';
     public defaultHeaders = new HttpHeaders();
@@ -89,85 +89,19 @@ export class UsereventUserCredentialsControllerService {
     }
 
     /**
-     * @param id 
-     * @param newUserCredentialsInUserevent 
+     * @param filter 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usereventUserCredentialsControllerCreate(id: string, newUserCredentialsInUserevent?: NewUserCredentialsInUserevent, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<UserCredentials>;
-    public usereventUserCredentialsControllerCreate(id: string, newUserCredentialsInUserevent?: NewUserCredentialsInUserevent, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<UserCredentials>>;
-    public usereventUserCredentialsControllerCreate(id: string, newUserCredentialsInUserevent?: NewUserCredentialsInUserevent, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<UserCredentials>>;
-    public usereventUserCredentialsControllerCreate(id: string, newUserCredentialsInUserevent?: NewUserCredentialsInUserevent, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling usereventUserCredentialsControllerCreate.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (jwt) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        let responseType: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType = 'text';
-        }
-
-        return this.httpClient.post<UserCredentials>(`${this.configuration.basePath}/userevents/${encodeURIComponent(String(id))}/user-credentials`,
-            newUserCredentialsInUserevent,
-            {
-                responseType: <any>responseType,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param id 
-     * @param where 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public usereventUserCredentialsControllerDelete(id: string, where?: { [key: string]: object; }, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<LoopbackCount>;
-    public usereventUserCredentialsControllerDelete(id: string, where?: { [key: string]: object; }, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<LoopbackCount>>;
-    public usereventUserCredentialsControllerDelete(id: string, where?: { [key: string]: object; }, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<LoopbackCount>>;
-    public usereventUserCredentialsControllerDelete(id: string, where?: { [key: string]: object; }, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling usereventUserCredentialsControllerDelete.');
-        }
+    public usereventControllerFind(filter?: UsereventFilter1, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<UsereventWithRelations>>;
+    public usereventControllerFind(filter?: UsereventFilter1, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<UsereventWithRelations>>>;
+    public usereventControllerFind(filter?: UsereventFilter1, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<UsereventWithRelations>>>;
+    public usereventControllerFind(filter?: UsereventFilter1, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (where !== undefined && where !== null) {
+        if (filter !== undefined && filter !== null) {
           queryParameters = this.addToHttpParams(queryParameters,
-            <any>where, 'where');
+            <any>filter, 'filter');
         }
 
         let headers = this.defaultHeaders;
@@ -197,7 +131,7 @@ export class UsereventUserCredentialsControllerService {
             responseType = 'text';
         }
 
-        return this.httpClient.delete<LoopbackCount>(`${this.configuration.basePath}/userevents/${encodeURIComponent(String(id))}/user-credentials`,
+        return this.httpClient.get<Array<UsereventWithRelations>>(`${this.configuration.basePath}/userevents`,
             {
                 params: queryParameters,
                 responseType: <any>responseType,
@@ -215,12 +149,12 @@ export class UsereventUserCredentialsControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usereventUserCredentialsControllerGet(id: string, filter?: { [key: string]: object; }, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<UserCredentials>;
-    public usereventUserCredentialsControllerGet(id: string, filter?: { [key: string]: object; }, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<UserCredentials>>;
-    public usereventUserCredentialsControllerGet(id: string, filter?: { [key: string]: object; }, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<UserCredentials>>;
-    public usereventUserCredentialsControllerGet(id: string, filter?: { [key: string]: object; }, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public usereventControllerFindById(id: string, filter?: UsereventFilter, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<UsereventWithRelations>;
+    public usereventControllerFindById(id: string, filter?: UsereventFilter, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<UsereventWithRelations>>;
+    public usereventControllerFindById(id: string, filter?: UsereventFilter, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<UsereventWithRelations>>;
+    public usereventControllerFindById(id: string, filter?: UsereventFilter, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling usereventUserCredentialsControllerGet.');
+            throw new Error('Required parameter id was null or undefined when calling usereventControllerFindById.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -256,7 +190,7 @@ export class UsereventUserCredentialsControllerService {
             responseType = 'text';
         }
 
-        return this.httpClient.get<UserCredentials>(`${this.configuration.basePath}/userevents/${encodeURIComponent(String(id))}/user-credentials`,
+        return this.httpClient.get<UsereventWithRelations>(`${this.configuration.basePath}/userevents/${encodeURIComponent(String(id))}`,
             {
                 params: queryParameters,
                 responseType: <any>responseType,
@@ -270,23 +204,16 @@ export class UsereventUserCredentialsControllerService {
 
     /**
      * @param id 
-     * @param where 
-     * @param userCredentialsPartial 
+     * @param usereventPartial 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usereventUserCredentialsControllerPatch(id: string, where?: { [key: string]: object; }, userCredentialsPartial?: UserCredentialsPartial, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<LoopbackCount>;
-    public usereventUserCredentialsControllerPatch(id: string, where?: { [key: string]: object; }, userCredentialsPartial?: UserCredentialsPartial, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<LoopbackCount>>;
-    public usereventUserCredentialsControllerPatch(id: string, where?: { [key: string]: object; }, userCredentialsPartial?: UserCredentialsPartial, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<LoopbackCount>>;
-    public usereventUserCredentialsControllerPatch(id: string, where?: { [key: string]: object; }, userCredentialsPartial?: UserCredentialsPartial, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public usereventControllerUpdateById(id: string, usereventPartial?: UsereventPartial, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public usereventControllerUpdateById(id: string, usereventPartial?: UsereventPartial, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public usereventControllerUpdateById(id: string, usereventPartial?: UsereventPartial, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public usereventControllerUpdateById(id: string, usereventPartial?: UsereventPartial, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling usereventUserCredentialsControllerPatch.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (where !== undefined && where !== null) {
-          queryParameters = this.addToHttpParams(queryParameters,
-            <any>where, 'where');
+            throw new Error('Required parameter id was null or undefined when calling usereventControllerUpdateById.');
         }
 
         let headers = this.defaultHeaders;
@@ -302,7 +229,6 @@ export class UsereventUserCredentialsControllerService {
         if (httpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'application/json'
             ];
             httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -325,10 +251,9 @@ export class UsereventUserCredentialsControllerService {
             responseType = 'text';
         }
 
-        return this.httpClient.patch<LoopbackCount>(`${this.configuration.basePath}/userevents/${encodeURIComponent(String(id))}/user-credentials`,
-            userCredentialsPartial,
+        return this.httpClient.patch<any>(`${this.configuration.basePath}/userevents/${encodeURIComponent(String(id))}`,
+            usereventPartial,
             {
-                params: queryParameters,
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

@@ -11,10 +11,13 @@
  */
 
 
-export interface Userevent { 
-    name: string;
-    email: string;
-    id?: string;
-    premium?: boolean;
+export interface UsereventScopeFilter { 
+    offset?: number;
+    limit?: number;
+    skip?: number;
+    order?: string | Array<string>;
+    where?: { [key: string]: object; };
+    fields?: any | Array<string>;
+    include?: Array<{ [key: string]: object; }>;
 }
 

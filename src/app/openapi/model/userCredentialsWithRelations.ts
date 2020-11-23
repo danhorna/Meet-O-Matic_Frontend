@@ -12,10 +12,11 @@
 
 
 /**
- * (tsType: @loopback/repository-json-schema#Optional<Omit<UserCredentials, \'id\'>, \'usereventId\'>, schemaOptions: { title: \'NewUserCredentialsInUserevent\', exclude: [ \'id\' ], optional: [ \'usereventId\' ] })
+ * (tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })
  */
-export interface NewUserCredentialsInUserevent { 
+export interface UserCredentialsWithRelations { 
     password: string;
+    id?: string;
     usereventId?: string;
 }
 

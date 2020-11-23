@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { UsereventControllerService } from 'src/app/openapi/api/usereventController.service';
+import { TokenServiceInterface } from 'src/app/services/tokenservice.interface';
+import { TokenserviceService } from 'src/app/services/tokenservice.service';
 @Component({
   selector: 'app-premium',
   templateUrl: './premium.component.html',
@@ -9,12 +12,21 @@ export class PremiumComponent implements OnInit {
 
 
   public payPalConfig: IPayPalConfig;
+  premiumUser: boolean
+  user: Object
 
-  constructor() {
+  constructor(
+    private UserController: UsereventControllerService,
+    private tokenController: TokenserviceService
+  ) {
     this.initConfig() 
   }
 
   ngOnInit(): void {
+    this.user = this.tokenController.getUser()
+    this.UserController.usereventControllerFindById(this.user['id']).subscribe((res)=>{
+      this.premiumUser = res['premium']
+    })
   }
 
   initConfig() {
@@ -65,6 +77,9 @@ export class PremiumComponent implements OnInit {
       },
       onClientAuthorization: (data) => {
         // Transaccion autorizada, detalles de la compra en *data*
+        this.UserController.usereventControllerUpdateById(this.user['id'],{premium: true}).subscribe(res=>{
+          this.premiumUser = true
+        })
       },
       onCancel: (data, actions) => {
         // Al cancelar transaccion, *data* almacena el ID de la orden

@@ -18,6 +18,7 @@ export interface NewUser {
     name: string;
     email: string;
     id?: string;
+    premium?: boolean;
     password: string;
 }
 

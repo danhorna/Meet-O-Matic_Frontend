@@ -11,9 +11,13 @@
  */
 
 
-export interface UserCredentials { 
-    password: string;
+/**
+ * (tsType: Partial<Userevent>, schemaOptions: { partial: true })
+ */
+export interface UsereventPartial { 
+    name?: string;
+    email?: string;
     id?: string;
-    usereventId?: string;
+    premium?: boolean;
 }
 

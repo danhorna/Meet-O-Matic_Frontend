@@ -9,14 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { UsereventScopeFilter } from './usereventScopeFilter';
 
 
-/**
- * (tsType: Partial<UserCredentials>, schemaOptions: { partial: true })
- */
-export interface UserCredentialsPartial { 
-    password?: string;
-    id?: string;
-    usereventId?: string;
+export interface UsereventIncludeFilterItems { 
+    relation?: string;
+    scope?: UsereventScopeFilter;
 }
 

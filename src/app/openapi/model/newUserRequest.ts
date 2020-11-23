@@ -15,6 +15,7 @@ export interface NewUserRequest {
     name: string;
     email: string;
     id?: string;
+    premium?: boolean;
     password: string;
 }
 
