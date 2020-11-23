@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgxPayPalModule } from 'ngx-paypal';
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +22,8 @@ import { ProfileComponent } from './components/routes/profile/profile.component'
 import { MyeventComponent } from './components/routes/myevent/myevent.component';
 import { CloneComponent } from './components/routes/myevent/clone/clone.component';
 import { EventComponent } from './components/routes/event/event.component'
-import { VerifiedComponent } from './components/routes/event/verified/verified.component'
+import { VerifiedComponent } from './components/routes/event/verified/verified.component';
+import { PremiumComponent } from './components/routes/premium/premium.component'
 
 @NgModule({
   declarations: [
@@ -35,9 +38,11 @@ import { VerifiedComponent } from './components/routes/event/verified/verified.c
     MyeventComponent,
     CloneComponent,
     EventComponent,
-    VerifiedComponent
+    VerifiedComponent,
+    PremiumComponent
   ],
   imports: [
+    NgxPayPalModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
