@@ -1,12 +1,19 @@
-<div class="container" *ngIf="this.access">
-    <div *ngIf="this.theEvent['active']">
-        
-        
-
-
-        
-    </div>
-    <div *ngIf="!this.theEvent['active']">
-        No esta activado
+<div class="container" *ngIf="this.exists && this.waitingpass">
+    <div class="card text-center">
+        <div class="card-header">
+            Acceder a un formulario
+        </div>
+        <div class="card-body">
+            <form class="col-sm-6" [formGroup]="passForm" (ngSubmit)="theSubmit()">
+                <h5 class="card-title">Ingrese la contraseña:</h5>
+                <input type="password" class="form-control" id="password" placeholder="Ingresar descripcion"
+                    formControlName="password">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
+<div class="container" *ngIf="!this.exists">
+    El evento no existe
+</div>
+<app-verified *ngIf = 'approved' [eventApp]="eventApp"></app-verified>

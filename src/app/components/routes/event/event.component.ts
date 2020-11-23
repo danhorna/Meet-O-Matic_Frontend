@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EventControllerService } from 'src/app/openapi';
 
@@ -10,29 +10,44 @@ import { EventControllerService } from 'src/app/openapi';
 })
 export class EventComponent implements OnInit {
 
-
-  eventId = this.route.snapshot.paramMap.get('id')
-  responseForm: FormGroup
-  theEvent: Object
-  access: boolean = false
+  passForm: FormGroup
+  id: string
+  exists: Boolean
+  actualEvent: Object
+  waitingpass: Boolean
+  approved: Boolean= false
+  eventApp: Object
 
   constructor(
+    private _builder: FormBuilder,
     private route: ActivatedRoute,
-    private responseFormBuilder: FormBuilder,
     private eventController: EventControllerService
   ) {
-    this.responseForm = this.responseFormBuilder.group({
-      prefdates: new FormArray([]),
-      name: ['', Validators.required],
-      message: ['']
+    this.passForm = this._builder.group({
+      password: ['', Validators.required]
     })
+    this.waitingpass = true
   }
 
   ngOnInit(): void {
-    this.eventController.eventControllerFindById(this.eventId).subscribe(res=>{
-      this.theEvent = res
-      this.access = true
+    this.id = this.route.snapshot.paramMap.get('id')
+    this.eventController.eventControllerFindById(this.id).subscribe((res) =>{
+      this.actualEvent = res
+      this.exists = true
+    }, (err) =>{
+      // El evento no existe
+      this.exists = false
     })
   }
 
+  theSubmit(): void{
+    if (this.actualEvent['password'] == this.passForm.value.password){
+      this.approved = true
+      this.waitingpass = false
+      this.eventApp = this.actualEvent
+    }
+    else{
+      console.log('no es la pass')
+    }
+  }
 }
