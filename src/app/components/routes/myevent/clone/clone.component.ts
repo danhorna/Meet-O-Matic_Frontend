@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsereventEventControllerService } from 'src/app/openapi';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsereventControllerService, UsereventEventControllerService } from 'src/app/openapi';
 import { TokenserviceService } from 'src/app/services/tokenservice.service';
 
 @Component({
@@ -20,7 +20,8 @@ export class CloneComponent implements OnInit {
   constructor(
     private cloneFormBuilder: FormBuilder,
     private tokenService: TokenserviceService,
-    private userController: UsereventEventControllerService
+    private userController: UsereventEventControllerService,
+    private userControl: UsereventControllerService
   ) { }
 
   ngOnInit(): void {
@@ -81,15 +82,17 @@ export class CloneComponent implements OnInit {
               if (this.compareWithToday(res[i]['creationDate']))
                 contador++
             }
-            if (contador < 10){
-              this.userController.usereventEventControllerCreate(user.id,toSend).subscribe((res) => {
-                this.eventCreated = res
-                this.created = true
-              })
-            }
-            else{
-              this.exceeded = true
-            }
+            this.userControl.usereventControllerFindById(user.id).subscribe(res=>{
+              if (contador < 10 || res['premium']){
+                this.userController.usereventEventControllerCreate(user.id,toSend).subscribe((res) => {
+                  this.eventCreated = res
+                  this.created = true
+                })
+              }
+              else{
+                this.exceeded = true
+              }
+            })
           })
         }
         else{
