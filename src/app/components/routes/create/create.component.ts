@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventControllerService, UsereventControllerService, UsereventEventControllerService } from 'src/app/openapi';
 import { TokenserviceService } from 'src/app/services/tokenservice.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create',
@@ -14,7 +15,8 @@ export class CreateComponent implements OnInit {
   created: boolean = false
   eventCreated: Object
   exceeded: boolean = false
-  
+  recipients: Array<string> = []
+  emailForm: FormGroup
   constructor(
     private createFormBuilder: FormBuilder,
     private tokenService: TokenserviceService,
@@ -29,9 +31,25 @@ export class CreateComponent implements OnInit {
       date: [''],
       dates: new FormArray([])
     })
+    this.emailForm = this.createFormBuilder.group({
+      recipient: ['',Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])]
+    })
   }
 
   ngOnInit(): void {
+  }
+
+  removeEmail(i){
+    this.recipients.splice(i, 1)
+  }
+
+  addRecipient(){
+    if (this.emailForm.valid) {
+      this.recipients.push(this.emailForm.value.recipient)
+    }
+    else{
+      console.log('Email erroneo')
+    }
   }
 
   convertDate(aDate: string): String {
@@ -64,6 +82,16 @@ export class CreateComponent implements OnInit {
     return (todayMonth == aux.getMonth() && todayYear == aux.getFullYear())
   }
 
+  randomString(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+
   theSubmit() {
     if (this.createForm.valid) {
       if (this.createForm.value.dates.length > 0) {
@@ -72,7 +100,8 @@ export class CreateComponent implements OnInit {
           description: this.createForm.value.description,
           dates: this.createForm.value.dates,
           password: this.createForm.value.password,
-          creationDate: new Date().toString()
+          creationDate: new Date().toString(),
+          auth: this.randomString(5)
         }
         if (this.tokenService.isValid()) {
           const user = this.tokenService.getUser()
@@ -87,6 +116,14 @@ export class CreateComponent implements OnInit {
                 this.userController.usereventEventControllerCreate(user.id,toSend).subscribe((res) => {
                   this.eventCreated = res
                   this.created = true
+                  if (this.recipients.length > 0){
+                    const emailToSend = {
+                      recipients: this.recipients,
+                      eventurl: environment.SITE_URL + environment.EVENT_PATH + this.eventCreated['id'],
+                      password: this.eventCreated['password']
+                    }
+                    this.eventController.eventControllerSendEmail(emailToSend).subscribe()
+                  }
                 })
               }
               else{
@@ -99,6 +136,14 @@ export class CreateComponent implements OnInit {
           this.eventController.eventControllerCreate(toSend).subscribe((res) => {
             this.eventCreated = res
             this.created = true
+            if (this.recipients.length > 0){
+              const emailToSend = {
+                recipients: this.recipients,
+                eventurl: environment.SITE_URL + environment.EVENT_PATH + this.eventCreated['id'],
+                password: this.eventCreated['password']
+              }
+              this.eventController.eventControllerSendEmail(emailToSend).subscribe()
+            }
           })
         }
       }

@@ -23,7 +23,8 @@ import { MyeventComponent } from './components/routes/myevent/myevent.component'
 import { CloneComponent } from './components/routes/myevent/clone/clone.component';
 import { EventComponent } from './components/routes/event/event.component'
 import { VerifiedComponent } from './components/routes/event/verified/verified.component';
-import { PremiumComponent } from './components/routes/premium/premium.component'
+import { PremiumComponent } from './components/routes/premium/premium.component';
+import { ResultsComponent } from './components/routes/results/results.component'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PremiumComponent } from './components/routes/premium/premium.component'
     CloneComponent,
     EventComponent,
     VerifiedComponent,
-    PremiumComponent
+    PremiumComponent,
+    ResultsComponent
   ],
   imports: [
     NgxPayPalModule,

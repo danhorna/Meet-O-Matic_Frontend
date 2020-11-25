@@ -55,6 +55,21 @@
       <label for="password">Password de acceso:</label>
       <input type="password" class="form-control" id="password" placeholder="" formControlName="password">
     </div>
+    <div class="form-group">
+      <form [formGroup]="emailForm">
+        <label for="recipient">Ingresá los emails de tus contactos para avisarles sobre este formulario</label>
+        <input type="text" class="form-control" id="recipient" formControlName="recipient">
+        <p id="emailadder" class="text-danger d-none">asd</p>
+        <input (click)="addRecipient()" type="button" value="agregar" [disabled]="emailForm.invalid">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"
+            *ngFor="let item of this.recipients; index as i">
+            {{item}}
+            <span class="badge badge-primary badge-pill"><button (click)="removeEmail(i)">quitar</button></span>
+          </li>
+        </ul>
+      </form>
+    </div>
     <button type="button" class="btn btn-primary" [disabled]="createForm.invalid" (click)="theSubmit()">Submit</button>
   </form>
 </div>

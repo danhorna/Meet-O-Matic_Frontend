@@ -20,6 +20,7 @@ export interface NewEvent {
     name: string;
     description: string;
     password: string;
+    auth: string;
     usereventId?: string;
     creationDate: string;
 }

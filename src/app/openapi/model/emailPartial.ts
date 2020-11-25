@@ -12,17 +12,11 @@
 
 
 /**
- * (tsType: Partial<Event>, schemaOptions: { partial: true })
+ * (tsType: Partial<Email>, schemaOptions: { partial: true })
  */
-export interface EventPartial { 
-    dates?: Array<object>;
-    active?: boolean;
-    id?: string;
-    name?: string;
-    description?: string;
+export interface EmailPartial { 
+    recipients?: Array<string>;
+    eventurl?: string;
     password?: string;
-    auth?: string;
-    usereventId?: string;
-    creationDate?: string;
 }
 

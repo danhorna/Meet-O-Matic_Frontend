@@ -7,7 +7,8 @@ export const environment = {
   TOKEN_KEY:'token',
   USER_KEY:'user',
   API_BASE_PATH: 'http://127.0.0.1:3000',
-  SITE_URL: 'http://localhost:4200'
+  SITE_URL: 'http://localhost:4200/',
+  EVENT_PATH: 'event/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

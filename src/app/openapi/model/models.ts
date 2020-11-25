@@ -1,3 +1,5 @@
+export * from './email';
+export * from './emailPartial';
 export * from './event';
 export * from './eventFilter';
 export * from './eventFilter1';

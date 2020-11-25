@@ -64,6 +64,16 @@ export class CloneComponent implements OnInit {
     return (todayMonth == aux.getMonth() && todayYear == aux.getFullYear())
   }
 
+  randomString(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+
   theSubmit() {
     if (this.cloneForm.valid) {
       if (this.cloneForm.value.dates.length > 0) {
@@ -72,7 +82,8 @@ export class CloneComponent implements OnInit {
           description: this.cloneForm.value.description,
           dates: this.cloneForm.value.dates,
           password: this.cloneForm.value.password,
-          creationDate: new Date().toString()
+          creationDate: new Date().toString(),
+          auth: this.randomString(5)
         }
         if (this.tokenService.isValid()) {
           const user = this.tokenService.getUser()
