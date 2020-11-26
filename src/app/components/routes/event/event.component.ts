@@ -10,13 +10,14 @@ import { EventControllerService } from 'src/app/openapi';
 })
 export class EventComponent implements OnInit {
 
-  passForm: FormGroup
-  id: string
-  exists: Boolean
-  actualEvent: Object
-  waitingpass: Boolean
-  approved: Boolean= false
-  eventApp: Object
+  passForm: FormGroup   // Definiendo el formulario de la contraseña
+  id: string    // Almaceno id del evento desde url
+  exists: Boolean = false   // Para saber si existe el evento y habilitar div en el html
+  actualEvent: Object   //  Almacenamos el evento
+  waitingpass: Boolean = true    // Esperamos el ingreso de la contraseña
+  approved: Boolean= false    //  Si la contraseña ingresada es correcta modificamos el dom
+  auth: string    //  Almaceno parametro auth
+  resultAccess: boolean = false   // Para dar acceso a los resultados
 
   constructor(
     private _builder: FormBuilder,
@@ -26,13 +27,15 @@ export class EventComponent implements OnInit {
     this.passForm = this._builder.group({
       password: ['', Validators.required]
     })
-    this.waitingpass = true
+    this.auth = this.route.snapshot.queryParamMap.get('auth')
+    this.id = this.route.snapshot.paramMap.get('id')
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id')
     this.eventController.eventControllerFindById(this.id).subscribe((res) =>{
       this.actualEvent = res
+      if (this.actualEvent['auth'] == this.auth)
+        this.resultAccess = true
       this.exists = true
     }, (err) =>{
       // El evento no existe
@@ -44,7 +47,6 @@ export class EventComponent implements OnInit {
     if (this.actualEvent['password'] == this.passForm.value.password){
       this.approved = true
       this.waitingpass = false
-      this.eventApp = this.actualEvent
     }
     else{
       console.log('no es la pass')

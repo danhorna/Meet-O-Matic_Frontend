@@ -24,7 +24,7 @@ import { CloneComponent } from './components/routes/myevent/clone/clone.componen
 import { EventComponent } from './components/routes/event/event.component'
 import { VerifiedComponent } from './components/routes/event/verified/verified.component';
 import { PremiumComponent } from './components/routes/premium/premium.component';
-import { ResultsComponent } from './components/routes/results/results.component'
+import { ResultsComponent } from './components/routes/event/results/results.component';
 
 @NgModule({
   declarations: [

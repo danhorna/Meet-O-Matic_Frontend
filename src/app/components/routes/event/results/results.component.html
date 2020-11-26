@@ -1,0 +1,11 @@
+<div class="container" *ngIf="this.noResponses">
+    No hay respuestas aun
+</div>
+<div class="container" *ngIf="!this.noResponses">
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center"
+            *ngFor="let item of this.event['dates']; index as i">
+            La fecha: {{convertDate(item[0])}} >> {{convertDate(item[1])}} fue elegida {{this.resultados[i]}} veces
+        </li>
+    </ul>
+</div>

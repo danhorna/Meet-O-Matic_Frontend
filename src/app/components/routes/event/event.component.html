@@ -1,4 +1,4 @@
-<div class="container" *ngIf="this.exists && this.waitingpass">
+<div class="container" *ngIf="this.exists && this.waitingpass && !this.resultAccess">
     <div class="card text-center">
         <div class="card-header">
             Acceder a un formulario
@@ -16,4 +16,5 @@
 <div class="container" *ngIf="!this.exists">
     El evento no existe
 </div>
-<app-verified *ngIf = 'approved' [eventApp]="eventApp"></app-verified>
+<app-verified *ngIf = 'approved' [eventApp]="actualEvent"></app-verified>
+<app-results *ngIf = 'resultAccess' [event]="actualEvent"></app-results>
