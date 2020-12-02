@@ -10,13 +10,14 @@ import { MyeventComponent } from './components/routes/myevent/myevent.component'
 import { PremiumComponent } from './components/routes/premium/premium.component';
 import { ProfileComponent } from './components/routes/profile/profile.component';
 import { SignupComponent } from './components/routes/signup/signup.component';
+import { LoginGuard } from './services/guards/loginguard';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'create', component: CreateComponent},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'profile', component: ProfileComponent, canActivate: [LoginGuard]},
   { path: 'myevent/:id', component: MyeventComponent},
   { path: 'event/:id', component: EventComponent},
   { path: 'premium', component: PremiumComponent}

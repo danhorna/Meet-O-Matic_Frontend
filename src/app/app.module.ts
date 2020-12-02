@@ -25,6 +25,7 @@ import { EventComponent } from './components/routes/event/event.component'
 import { VerifiedComponent } from './components/routes/event/verified/verified.component';
 import { PremiumComponent } from './components/routes/premium/premium.component';
 import { ResultsComponent } from './components/routes/event/results/results.component';
+import { LoginGuard } from './services/guards/loginguard';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ResultsComponent } from './components/routes/event/results/results.comp
     FormsModule
   ],
   providers: [
-    TokenserviceService
+    TokenserviceService,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })
