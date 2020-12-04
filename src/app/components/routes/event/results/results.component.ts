@@ -26,7 +26,7 @@ export class ResultsComponent implements OnInit {
           for (var j = 0; j < responses.length; j++){
             for (var k = 0; k < responses[j]['prefdates'].length; k++){
               var compDate = responses[j]['prefdates'][k]
-              if (this.compareObj(theDate,compDate)){
+              if (theDate['id'] == compDate['id']){
                 cont++
                 break
               }
@@ -42,22 +42,5 @@ export class ResultsComponent implements OnInit {
     const aux = new Date(aDate)
     return aux.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' })
   }
-
-  compareObj(a, b) {
-    var aKeys = Object.keys(a).sort();
-    var bKeys = Object.keys(b).sort();
-    if (aKeys.length !== bKeys.length) {
-        return false;
-    }
-    if (aKeys.join('') !== bKeys.join('')) {
-        return false;
-    }
-    for (var i = 0; i < aKeys.length; i++) {
-        if ( a[aKeys[i]]  !== b[bKeys[i]]) {
-            return false;
-        }
-    }
-    return true;
-}
 
 }

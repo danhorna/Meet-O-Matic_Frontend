@@ -19,18 +19,6 @@
                 <input type="text" class="form-control" id="description" placeholder="Ingresar descripcion"
                     formControlName="message">
             </div>
-            <div class="form-group">
-                <p>Fechas propuestas:</p>
-                <select formControlName="origin" (ngModelChange)="addDate()" multiple>
-                    <option [ngValue]="item" *ngFor="let item of this.theEvent['dates']">{{convertDate(item[0])}} -> {{convertDate(item[1])}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <p>Fechas elegidas:</p>
-                <select formControlName="prefdates" (ngModelChange)="delDate()" multiple>
-                    <option [ngValue]="item" *ngFor="let item of this.datesSelected">{{convertDate(item[0])}} -> {{convertDate(item[1])}}</option>
-                </select>
-            </div>
             <p id="datearray" class="text-danger d-none">Debe agregar al menos una fecha</p>
             <button type="button" class="btn btn-primary" [disabled]="responseForm.invalid"
                 (click)="theSubmit()">Submit</button>

@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { EventControllerService, EventResponseControllerService } from 'src/app/openapi';
-
+import { colors } from './colors'
 @Component({
   selector: 'app-verified',
   templateUrl: './verified.component.html',
@@ -17,13 +17,10 @@ export class VerifiedComponent implements OnInit {
   theEvent: Object
   datesSelected: Array<Object> = []
   access: boolean = false
-  origin: Object
   saved: boolean = false
 
   view: CalendarView = CalendarView.Week;
-
   viewDate: Date = new Date();
-
   events = []
 
   constructor(
@@ -35,15 +32,14 @@ export class VerifiedComponent implements OnInit {
     this.responseForm = this.responseFormBuilder.group({
       prefdates: [null],
       name: ['', Validators.required],
-      message: [''],
-      origin: [null]
+      message: ['']
     })
   }
 
   ngOnInit(): void {
-    this.eventController.eventControllerFindById(this.eventId).subscribe(res=>{
+    this.eventController.eventControllerFindById(this.eventId).subscribe(res => {
       this.events = res['dates']
-      for (var i=0; i<this.events.length; i++){
+      for (var i = 0; i < this.events.length; i++) {
         this.events[i].start = new Date(this.events[i].start)
         this.events[i].end = new Date(this.events[i].end)
       }
@@ -52,50 +48,40 @@ export class VerifiedComponent implements OnInit {
     })
   }
 
-  eventClicked(aEvent){
-    console.log(aEvent)
+  eventClicked(aEvent) {
+    if (!(this.datesSelected.includes(aEvent['event']))) {
+      var eventI = this.events.findIndex((ev => ev['id'] == aEvent['event']['id']))
+      this.datesSelected.push(aEvent['event'])
+      this.events[eventI].title = 'Seleccionado'
+      this.events[eventI].color = colors.green
+    }
+    else{
+      var eventI = this.events.findIndex((ev => ev['id'] == aEvent['event']['id']))
+      var selecI = this.datesSelected.findIndex((ev => ev['id'] == aEvent['event']['id']))
+      this.datesSelected.splice(selecI, 1)
+      this.events[eventI].title = ''
+      this.events[eventI].color = colors.blue
+    }
   }
 
-  convertDate(aDate: string): String {
-    const aux = new Date(aDate)
-    return aux.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' })
-  }
-
-  addDate(){
-    document.getElementById("datearray").classList.add("d-none")
-    const dateToAdd = this.responseForm.value.origin[0]
-    this.datesSelected.push(dateToAdd)
-    for (var i = 0; i < this.theEvent['dates'].length; i++)
-      if(this.theEvent['dates'][i] === dateToAdd )
-        this.theEvent['dates'].splice(i,1)
-  }
-
-  delDate(){
-    const dateToDel = this.responseForm.value.prefdates[0]
-    this.theEvent['dates'].push(dateToDel)
-    for (var i = 0; i < this.datesSelected.length; i++)
-      if(this.datesSelected[i] === dateToDel )
-        this.datesSelected.splice(i,1)
-  }
-  
-  theSubmit(){
-    if (this.responseForm.valid){
+  theSubmit() {
+    if (this.responseForm.valid) {
       if (this.datesSelected.length > 0) {
         const toSend = {
           prefdates: this.datesSelected,
           name: this.responseForm.value.name,
           message: this.responseForm.value.message
         }
-        this.eventresponseController.eventResponseControllerCreate(this.theEvent['id'],toSend).subscribe((res)=>{
+        this.eventresponseController.eventResponseControllerCreate(this.theEvent['id'], toSend).subscribe((res) => {
           this.saved = true
         })
       }
-      else{
+      else {
         document.getElementById("datearray").classList.remove("d-none")
       }
 
     }
-    else{
+    else {
       console.log('form no valido')
     }
   }
