@@ -27,6 +27,8 @@ import { PremiumComponent } from './components/routes/premium/premium.component'
 import { ResultsComponent } from './components/routes/event/results/results.component';
 import { LoggedGuard } from './services/guards/logged.guard';
 import { NotfoundComponent } from './components/routes/notfound/notfound.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { NotfoundComponent } from './components/routes/notfound/notfound.compone
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [
     TokenserviceService,
