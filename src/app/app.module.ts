@@ -25,7 +25,8 @@ import { EventComponent } from './components/routes/event/event.component'
 import { VerifiedComponent } from './components/routes/event/verified/verified.component';
 import { PremiumComponent } from './components/routes/premium/premium.component';
 import { ResultsComponent } from './components/routes/event/results/results.component';
-import { LoginGuard } from './services/guards/loginguard';
+import { LoggedGuard } from './services/guards/logged.guard';
+import { NotfoundComponent } from './components/routes/notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LoginGuard } from './services/guards/loginguard';
     EventComponent,
     VerifiedComponent,
     PremiumComponent,
-    ResultsComponent
+    ResultsComponent,
+    NotfoundComponent
   ],
   imports: [
     NgxPayPalModule,
@@ -57,7 +59,7 @@ import { LoginGuard } from './services/guards/loginguard';
   ],
   providers: [
     TokenserviceService,
-    LoginGuard
+    LoggedGuard
   ],
   bootstrap: [AppComponent]
 })

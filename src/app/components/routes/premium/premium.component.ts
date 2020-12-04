@@ -19,13 +19,14 @@ export class PremiumComponent implements OnInit {
     private UserController: UsereventControllerService,
     private tokenController: TokenserviceService
   ) {
-    this.initConfig() 
   }
 
   ngOnInit(): void {
     this.user = this.tokenController.getUser()
     this.UserController.usereventControllerFindById(this.user['id']).subscribe((res)=>{
       this.premiumUser = res['premium']
+      if (!this.premiumUser)
+        this.initConfig() 
     })
   }
 
