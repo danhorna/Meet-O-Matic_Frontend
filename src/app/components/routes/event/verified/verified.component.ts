@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { EventControllerService, EventResponseControllerService } from 'src/app/openapi';
 
 @Component({
@@ -19,6 +20,12 @@ export class VerifiedComponent implements OnInit {
   origin: Object
   saved: boolean = false
 
+  view: CalendarView = CalendarView.Week;
+
+  viewDate: Date = new Date();
+
+  events = []
+
   constructor(
     private route: ActivatedRoute,
     private responseFormBuilder: FormBuilder,
@@ -35,9 +42,18 @@ export class VerifiedComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventController.eventControllerFindById(this.eventId).subscribe(res=>{
+      this.events = res['dates']
+      for (var i=0; i<this.events.length; i++){
+        this.events[i].start = new Date(this.events[i].start)
+        this.events[i].end = new Date(this.events[i].end)
+      }
       this.theEvent = res
       this.access = true
     })
+  }
+
+  eventClicked(aEvent){
+    console.log(aEvent)
   }
 
   convertDate(aDate: string): String {

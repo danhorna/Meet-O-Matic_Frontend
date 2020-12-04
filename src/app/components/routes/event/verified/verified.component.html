@@ -43,3 +43,33 @@
 <div class="container" *ngIf="this.saved">
     Respuesta guardada
 </div>
+
+<div class="row">
+    <div class="col-md-6">
+      <div class="btn-group">
+        <div class="btn btn-primary" mwlCalendarPreviousView [view]="'week'" [(viewDate)]="viewDate">
+          Previous
+        </div>
+        <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+          Today
+        </div>
+        <div class="btn btn-primary" mwlCalendarNextView [view]="'week'" [(viewDate)]="viewDate">
+          Next
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 text-right">
+      <h3>{{ viewDate | calendarDate:('weekViewTitle') }}</h3>
+    </div>
+  </div>
+  <br />
+
+<div [ngSwitch]="view">
+  <mwl-calendar-week-view
+    *ngSwitchCase="'week'"
+    [viewDate]="viewDate"
+    [events]="events"
+    (eventClicked)="eventClicked($event)"
+  >
+  </mwl-calendar-week-view>
+</div>
