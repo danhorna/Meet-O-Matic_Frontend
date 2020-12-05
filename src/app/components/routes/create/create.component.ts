@@ -210,7 +210,7 @@ export class CreateComponent{
   ) {
     const dragToSelectEvent: CalendarEvent = {
       id: this.events.length,
-      title: 'New event',
+      title: '',
       start: segment.date,
       meta: {
         tmpEvent: true,
