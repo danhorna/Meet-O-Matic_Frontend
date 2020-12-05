@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EventControllerService, EventResponseControllerService } from 'src/app/openapi';
-import {Chart} from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-results',
@@ -36,13 +36,13 @@ export class ResultsComponent implements OnInit {
         }
         this.graph()
       }
-      else{
+      else {
         document.getElementById("noresponses").classList.remove("d-none")
       }
     })
   }
 
-  
+
 
   getRandomColor() {
     var letters = '0123456789ABCDEF';
@@ -84,13 +84,19 @@ export class ResultsComponent implements OnInit {
         }]
       },
       options: {
+        onResize: function (chart, size) {
+          if (screen.width < 768)
+            chart.options.legend.position = 'top'
+          else
+            chart.options.legend.position = 'right'
+          chart.update();
+        },
         title: {
           display: true,
           text: 'Custom Chart Title'
         },
         legend: {
-          position: 'right',
-          fontSize: 20
+          position: (screen.width < 768) ? 'top' : 'right'
         },
         tooltips: {
           displayColors: false,
