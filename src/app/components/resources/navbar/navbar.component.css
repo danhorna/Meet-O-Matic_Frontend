@@ -148,3 +148,12 @@ i {
         left: -25px
     }
 }
+
+@media (min-width: 991px) {
+    .maright {
+        margin-right: 1.5rem;
+    }
+    .maleft {
+        margin-left: 1.5rem!important;
+    }
+}

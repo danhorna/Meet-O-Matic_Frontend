@@ -40,6 +40,10 @@ export class NavbarComponent implements OnInit {
     return path == location.pathname
   }
 
+  load(){
+    setTimeout(function () { test(); });
+  }
+
 
 }
 
@@ -73,3 +77,7 @@ function test() {
     });
   });
 }
+
+$(window).on('resize', function () {
+  setTimeout(function () { test(); }, 500);
+});
