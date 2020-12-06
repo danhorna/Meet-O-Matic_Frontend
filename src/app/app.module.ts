@@ -15,7 +15,6 @@ import { SignupComponent } from './components/routes/signup/signup.component';
 import { CreateComponent } from './components/routes/create/create.component';
 
 // Date picker
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CreatedComponent } from './components/routes/create/created/created.component';
 import { ProfileComponent } from './components/routes/profile/profile.component';
@@ -29,6 +28,9 @@ import { LoggedGuard } from './services/guards/logged.guard';
 import { NotfoundComponent } from './components/routes/notfound/notfound.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
+import * as $ from 'jquery';
+
 
 @NgModule({
   declarations: [
@@ -54,8 +56,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     BrowserAnimationsModule,
     FormsModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })

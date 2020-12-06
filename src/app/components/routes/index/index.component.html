@@ -1,4 +1,21 @@
 <div class="container mt-5">
-    <p>Bienvenido al sitio</p>
-    <p>Desde acá podras programar tus reuniones</p>
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="heading mb-3 text-center">Organizá tus eventos</h2>
+            <div>
+                <p>Presentamos una forma simple de coordinar eventos junto a tus contactos</p>
+                <p>Es gratis y solo te lleva unos minutos!</p>
+            </div>
+            <div class="text-center mt-5">
+                <a class="btn boton btn-lg pb_btn-pill" [routerLink]="['/create']">
+                    <span class="fontbutton">Crear evento</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 text-center">
+            <img class="img-responsive" width="100%" height="auto" src="assets/images/event-planner.png" alt="eventguy">
+        </div>
+    </div>
 </div>

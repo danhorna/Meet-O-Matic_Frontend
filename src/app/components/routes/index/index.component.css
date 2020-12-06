@@ -1,0 +1,21 @@
+.heading {
+    color: #5161CE;
+    font-size: 4vh;
+}
+
+.pb_btn-pill {
+    border-radius: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.fontbutton{
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.boton {
+    background-color: #5161CE;
+    color: honeydew;
+}

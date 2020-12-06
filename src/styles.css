@@ -1,2 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~ng-pick-datetime/assets/style/picker.min.css";
+@media (min-width: 992px) {
+    .bodyw {
+        width: 80%;
+        margin: auto;
+    }
+}
+
+body {
+    background-color: #F2F4F9;
+    font-family: "Montserrat", Arial, sans-serif;
+}

@@ -1,31 +1,33 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
-    <a class="navbar-brand" [routerLink]="['/']">Meet-O-Matic</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-expand-lg navbar-mainbg">
+    <a class="navbar-brand navbar-logo" [routerLink]="['/']">Meet-O-Matic</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars text-white"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" [routerLink]="['/']">Inicio <span class="sr-only">(current)</span></a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-4">
+            <div class="hori-selector">
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+            <li class="nav-item" [ngClass]="{'active' : isActive('/')}">
+                <a class="nav-link" [routerLink]="['/']"><i class="fas fa-home"></i>Inicio</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" [routerLink]="['/create']">Crear<span class="sr-only">(current)</span></a>
+            <li class="nav-item" [ngClass]="{'active' : isActive('/create')}">
+                <a class="nav-link" [routerLink]="['/create']"><i class="fas fa-calendar-plus"></i>Crear</a>
             </li>
-            <li class="nav-item active" *ngIf="isLogged()">
-                <a class="nav-link" [routerLink]="['/profile']">Perfil<span class="sr-only">(current)</span></a>
+            <li class="nav-item" *ngIf="isLogged()" [ngClass]="{'active' : isActive('/profile')}">
+                <a class="nav-link" [routerLink]="['/profile']"><i class="fas fa-user-alt"></i>Perfil</a>
             </li>
         </ul>
-        <span class="navbar-text">
-            <a *ngIf="!isLogged()" [routerLink]="['/login']">Login<span class="sr-only">(current)</span></a>
-        </span>
-        <span class="navbar-text">
-            <a *ngIf="!isLogged()" [routerLink]="['/signup']">SignUp<span class="sr-only">(current)</span></a>
-        </span>
-        <span class="navbar-text" *ngIf="isLogged()">
-            Hola {{user.name}}
-          </span>
-        <span class="navbar-text">
-            <button *ngIf="isLogged()" class="btn-unstyled" (click)="logout()">Logout</button>
-        </span>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" *ngIf="!isLogged()" [ngClass]="{'active' : isActive('/login')}">
+                <a class="nav-link" [routerLink]="['/login']"><i class="fas fa-sign-in-alt"></i>Login</a>
+            </li>
+            <li class="nav-item mr-4" *ngIf="!isLogged()" [ngClass]="{'active' : isActive('/signup')}">
+                <a class="nav-link" [routerLink]="['/signup']"><i class="fas fa-user-plus"></i>SignUp</a>
+            </li>
+        </ul>
+        
     </div>
 </nav>

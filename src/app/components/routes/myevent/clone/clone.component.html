@@ -17,12 +17,6 @@
             <input type="text" class="form-control" id="description" placeholder="Ingresar descripcion"
                 formControlName="description">
         </div>
-        <div class="input-wrapper">
-            <label>Date Time:</label>
-            <input formControlName="date" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2"
-                [selectMode]="'range'">
-            <owl-date-time #dtPicker2></owl-date-time>
-        </div>
         <input (click)="addDate(cloneForm.value.date)" type="button" value="agregar">
         <p id="datepicker" class="text-danger d-none">Debe seleccionar una fecha correcta</p>
         <table class="table">
