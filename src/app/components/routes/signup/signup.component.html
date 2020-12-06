@@ -1,18 +1,59 @@
-<div class="container">
-    <form class="col-sm-6" [formGroup]="signupForm">
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Ingresa tu email" formControlName="email">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form class="bg-white pb_form_v1" [formGroup]="signupForm">
+                <h3 class="mb-4 mt-0 text-center">Completá los campos</h3>
+                <div class="alert alert-danger text-center mb-4" role="alert" *ngIf="this.wrong">
+                    Credenciales incorrectas
+                </div>
+                <div class="form-group mb-1">
+                    <input type="name" class="form-control pb_height-50 reverse" id="name" placeholder="Nombre"
+                        formControlName="name" (input)="remo()">
+                </div>
+                <div *ngIf="signupForm.get('name').invalid && signupForm.get('name').touched">
+                    <p>
+                        <small class="text-danger font-italic">
+                            Formato incorrecto
+                        </small>
+                    </p>
+                </div>
+                <div class="form-group mb-1 mt-4">
+                    <input type="email" class="form-control pb_height-50 reverse" id="email" placeholder="Email"
+                        formControlName="email" (input)="remo()">
+                </div>
+                <div *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched">
+                    <p>
+                        <small class="text-danger font-italic">
+                            Formato incorrecto
+                        </small>
+                    </p>
+                </div>
+                <div class="form-group mb-1 mt-4">
+                    <input type="password" class="form-control pb_height-50 reverse" placeholder="Contraseña"
+                        id="password" formControlName="password" autocomplete="on">
+                </div>
+                <div *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched">
+                    <p>
+                        <small class="text-danger font-italic">
+                            La contraseña debe tener al menos 8 caracteres
+                        </small>
+                    </p>
+                </div>
+                <div class="form-group mt-5">
+                    <button type="submit" class="btn btn-lg btn-block pb_btn-pill  btn-shadow-blue" (click)="signup()"
+                        [disabled]="!signupForm.valid || this.loading"
+                        [ngClass]="(!this.done)?'btn-primary':'btn-success'">
+                        <span *ngIf="!this.loading && !this.done">Registrarse</span>
+                        <div class="spinner-border text-dark" role="status" *ngIf="this.loading"></div>
+                        <span *ngIf="this.done">¡Registro correcto!</span>
+                    </button>
+                </div>
+                <div class="text-center" *ngIf="this.done">
+                    <small id="countdown" class="font-italic"></small>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="name">Nombre:</label>
-            <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre" formControlName="name">
-        </div>
-        <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input type="password" class="form-control" id="password" placeholder="Ingresar contraseña"
-                formControlName="password">
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid" (click)="signup()">Submit</button>
-    </form>
+        <div class="col-md-3"></div>
+    </div>
 </div>

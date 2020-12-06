@@ -56,19 +56,16 @@ export class LoginComponent implements OnInit {
         email: this.loginForm.value.email,
         password: this.loginForm.value.password
       }
-
-      setTimeout(() => {
-        this.userController.userControllerLogin(toSend).subscribe((res) => {
+      this.userController.userControllerLogin(toSend).subscribe((res) => {
+        this.loading = false
+        this.logged = true
+        this.tokenService.saveToken(res.token)
+        this.delayRedirect()
+      },
+        (err) => {
           this.loading = false
-          this.logged = true
-          this.tokenService.saveToken(res.token)
-          this.delayRedirect()
-        },
-          (err) => {
-            this.loading = false
-            this.wrong = true
-          })
-      }, 2000);
+          this.wrong = true
+        })
     }
   }
 }
