@@ -38,7 +38,7 @@
                         <span *ngIf="this.logged">¡Bienvenido!</span>
                     </button>
                 </div>
-                <div class="text-center">
+                <div class="text-center" *ngIf="this.logged">
                     <small id="countdown" class="font-italic"></small>
                 </div>
             </form>
