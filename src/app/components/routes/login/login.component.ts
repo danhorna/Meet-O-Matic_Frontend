@@ -37,12 +37,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  delayRedirect() {
+  delayRedirect(res) {
     var count = 3;
     var countdown = setInterval(() => {
       $("#countdown").html("Redirigiendo en " + count);
       if (count == 0) {
         clearInterval(countdown);
+        this.tokenService.saveToken(res.token)
         this.activeRouter.navigateByUrl('/')
       }
       count--;
@@ -59,8 +60,7 @@ export class LoginComponent implements OnInit {
       this.userController.userControllerLogin(toSend).subscribe((res) => {
         this.loading = false
         this.logged = true
-        this.tokenService.saveToken(res.token)
-        this.delayRedirect()
+        this.delayRedirect(res)
       },
         (err) => {
           this.loading = false
