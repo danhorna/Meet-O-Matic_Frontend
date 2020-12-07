@@ -1,0 +1,16 @@
+.mycustom .input-group-prepend {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    z-index: 9;
+}
+
+.cardtopbot {
+    background-color: lightsteelblue;
+    color: black;
+}
+
+.cardmid {
+    background-color: #F2F2F2;
+}

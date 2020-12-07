@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-created',
@@ -11,6 +12,14 @@ export class CreatedComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  eventUrl(){
+    return environment.SITE_URL + 'event/' + this.eventCreated['id']
+  }
+
+  resultEventUrl(){
+    return environment.SITE_URL + 'event/' + this.eventCreated['id'] + '?auth=' + this.eventCreated['auth']
   }
 
 }

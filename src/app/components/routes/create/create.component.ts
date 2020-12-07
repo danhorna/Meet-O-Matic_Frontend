@@ -53,6 +53,8 @@ export class CreateComponent{
   exceeded: boolean = false   //true si ya paso los +10 formularios y muestra div
   recipients: Array<string> = []  //almacena destinarios de email
   emailForm: FormGroup 
+  loading: boolean = false
+  err : boolean = false
 
   //Calendar
   viewDate = new Date();
@@ -96,28 +98,6 @@ export class CreateComponent{
     }
   }
 
-  convertDate(aDate: string): String {
-    const aux = new Date(aDate)
-    return aux.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' })
-  }
-
-  addDate(aDate: Array<Date>) {
-    if (aDate[0] instanceof Date && aDate[1] instanceof Date) {
-      document.getElementById("datepicker").classList.add("d-none")
-      document.getElementById("datearray").classList.add("d-none")
-      var toObj = {}
-      for (var i = 0; i < aDate.length; i++)
-        toObj[i] = (aDate[i]).toString()
-      this.createForm.value.dates.push(toObj)
-    }
-    else
-      document.getElementById("datepicker").classList.remove("d-none")
-  }
-
-  removeDate(index: number) {
-    this.createForm.value.dates.splice(index, 1)
-  }
-
   compareWithToday(aDate): boolean{
     var aux = new Date(aDate)
     const today = new Date()
@@ -137,8 +117,9 @@ export class CreateComponent{
  }
 
   theSubmit() {
-    if (this.createForm.valid) {
+    if (this.createForm.valid && !this.err) {
       if (this.events.length > 0) {
+        this.loading = true
         const toSend = {
           name: this.createForm.value.name,
           description: this.createForm.value.description,
@@ -168,12 +149,19 @@ export class CreateComponent{
                     }
                     this.eventController.eventControllerSendEmail(emailToSend).subscribe()
                   }
+                }, (err) => {
+                  console.log('Server error')
                 })
               }
               else{
-                this.exceeded = true
+                this.err = true
+                this.loading = false
               }
+            }, (err) => {
+              console.log('Server error')
             })
+          }, (err) => {
+            console.log('Server error')
           })
         }
         else {
@@ -188,6 +176,8 @@ export class CreateComponent{
               }
               this.eventController.eventControllerSendEmail(emailToSend).subscribe()
             }
+          }, (err) => {
+            console.log('Server error')
           })
         }
       }
@@ -222,6 +212,7 @@ export class CreateComponent{
       },
       actions: this.actions
     };
+    document.getElementById("datearray").classList.add("d-none")
     this.events = [...this.events, dragToSelectEvent];
     const segmentPosition = segmentElement.getBoundingClientRect();
     this.dragToCreateActive = true;

@@ -110,12 +110,17 @@
     </div>
     <div class="row">
       <div class="col text-center m-5">
-        <button type="button" class="btn btn-info" [disabled]="createForm.invalid"
-          (click)="theSubmit()">¡Crear evento!</button>
+        <button type="button" class="btn pb_btn-pill" [disabled]="createForm.invalid || this.loading"
+          (click)="theSubmit()" [ngClass]="(!this.err)?'btn-primary':'btn-danger'" >
+          <span *ngIf="!this.loading && !this.err">¡Crear evento!</span>
+          <div class="spinner-border text-dark" role="status" *ngIf="this.loading"></div>
+          <span *ngIf="this.err">Limite excedido</span>
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-<app-created *ngIf="this.created && !this.exceeded" [eventCreated]="eventCreated"></app-created>
-<div *ngIf="this.exceeded" class="text-danger">Ya excediste la cantidad maxima(10) de formularios por mes</div>
+<app-created *ngIf="this.created" [eventCreated]="eventCreated"></app-created>
+
+<!-- && !this.exceeded -->
