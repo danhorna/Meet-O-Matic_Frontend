@@ -1,3 +1,42 @@
-.iconColor{
+.iconColor {
     color: red;
+}
+
+.cal-week-view .cal-time-events {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.cal-day-columns {
+    height: 100%;
+}
+
+.cal-day-headers {
+    margin-right: 14.5px;
+}
+
+textarea {
+    height: 100px!important;
+    resize: none;
+}
+
+
+.mycustom .input-group-prepend {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    z-index: 9;
+}
+
+.mail {
+    background-color: #F2F2F2;
+    height: 150px;
+    overflow-y: scroll;
+
+}
+
+.maillist {
+    color: #5161CE;
+    background-color: #dddddd;
 }

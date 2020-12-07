@@ -1,80 +1,121 @@
-<div class="container" *ngIf="!this.created && !this.exceeded">
-  <form class="col-sm-6" [formGroup]="createForm">
-    <div class="form-group">
-      <label for="name">Nombre: <span class="text-danger"
-          *ngIf="createForm.get('name').errors && createForm.get('name').hasError('required')">*</span></label>
-      <input type="text" class="form-control" id="name" placeholder="Ingresa el nombre" formControlName="name">
-    </div>
-    <div *ngIf="createForm.get('name').invalid && 
-          createForm.get('name').errors && 
-          (createForm.get('name').dirty || createForm.get('name').touched)">
-      <small class="text-danger" *ngIf="createForm.get('name').hasError('required')">
-        This field is required.
-      </small>
-    </div>
-    <div class="form-group">
-      <label for="description">Descripcion:</label>
-      <input type="text" class="form-control" id="description" placeholder="Ingresar descripcion"
-        formControlName="description">
-    </div>
-    <p id="datearray" class="text-danger d-none">Debe agregar al menos una fecha</p>
-    <div class="form-group">
-      <label for="password">Password de acceso:</label>
-      <input type="password" class="form-control" id="password" placeholder="" formControlName="password">
-    </div>
-    <div class="form-group">
-      <form [formGroup]="emailForm">
-        <label for="recipient">Ingresá los emails de tus contactos para avisarles sobre este formulario</label>
-        <input type="text" class="form-control" id="recipient" formControlName="recipient">
-        <p id="emailadder" class="text-danger d-none">asd</p>
-        <input (click)="addRecipient()" type="button" value="agregar" [disabled]="emailForm.invalid">
-        <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-center"
-            *ngFor="let item of this.recipients; index as i">
-            {{item}}
-            <span class="badge badge-primary badge-pill"><button (click)="removeEmail(i)">quitar</button></span>
-          </li>
-        </ul>
+<div *ngIf="!this.created && !this.exceeded">
+  <div class="container pt-5 pb bg-white">
+    <div class="row">
+      <form class="col-md-4 bg-white onlypb pt-0" [formGroup]="createForm">
+        <h4 class="font-weight-bold">
+          Datos del evento:
+        </h4>
+        <div class="form-group mb-1 mt-2">
+          <input type="text" class="form-control pb_height-50 reverse" id="name" placeholder="Nombre"
+            formControlName="name">
+        </div>
+        <div *ngIf="createForm.get('name').invalid && createForm.get('name').touched">
+          <p>
+            <small class="text-danger font-italic">
+              Mínimo 6 carateres
+            </small>
+          </p>
+        </div>
+        <div class="form-group mb-1 mt-4">
+          <textarea class="form-control pb_height-50 reverse" id="description" placeholder="Descripción"
+            formControlName="description"></textarea>
+        </div>
+        <div *ngIf="createForm.get('description').invalid && createForm.get('description').touched">
+          <p>
+            <small class="text-danger font-italic">
+              Mínimo 10 carateres
+            </small>
+          </p>
+        </div>
+        <div class="form-group mb-1 mt-4">
+          <input type="password" class="form-control pb_height-50 reverse" id="password" placeholder="Contraseña"
+            formControlName="password" autocomplete="on">
+        </div>
+        <div *ngIf="createForm.get('password').invalid && createForm.get('password').touched">
+          <p class="mb-0">
+            <small class="text-danger font-italic">
+              Mínino 3 caracteres
+            </small>
+          </p>
+        </div>
+        <p>
+          <small class="text-info font-italic">
+            * Para compartir el evento
+          </small>
+        </p>
+        <hr>
+        <div class="form-group mb-1">
+          <form [formGroup]="emailForm">
+            <label for="recipient">Avisá a tus contactos:</label>
+            <div class="input-group mycustom">
+              <input type="text" class="form-control pb_height-50 reverse" id="recipient" formControlName="recipient"
+                placeholder="Email">
+              <div class="input-group-prepend">
+                <input type="button" (click)="addRecipient()" value="+" class="btn btn-dark btn-sm"
+                  [disabled]="emailForm.invalid">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="mail mt-4">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center maillist"
+              *ngFor="let item of this.recipients; index as i">
+              {{item}}
+              <span><i class="fas fa-trash" (click)="removeEmail(i)"></i></span>
+            </li>
+          </ul>
+        </div>
       </form>
-    </div>
-    <button type="button" class="btn btn-primary" [disabled]="createForm.invalid" (click)="theSubmit()">Submit</button>
-  </form>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="btn-group">
-        <div class="btn btn-primary" mwlCalendarPreviousView [view]="'week'" [(viewDate)]="viewDate">
-          Previous
+      <div class="col-md-8 bg-white">
+        <div class="row">
+          <h4 class="font-weight-bold text-center">
+            Seleccioná las fechas:
+          </h4>
+          <div class="ml-auto">
+            <div class="btn-group">
+              <div class="btn btn-secondary" mwlCalendarPreviousView [view]="'week'" [(viewDate)]="viewDate">
+                Anterior
+              </div>
+              <div class="btn btn-dark" mwlCalendarToday [(viewDate)]="viewDate">
+                Hoy
+              </div>
+              <div class="btn btn-secondary" mwlCalendarNextView [view]="'week'" [(viewDate)]="viewDate">
+                Siguiente
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-          Today
-        </div>
-        <div class="btn btn-primary" mwlCalendarNextView [view]="'week'" [(viewDate)]="viewDate">
-          Next
+        <div class="row">
+          <div class="overflow-auto col-md-12 p-0">
+            <ng-template #weekViewHourSegmentTemplate let-segment="segment" let-locale="locale"
+              let-segmentHeight="segmentHeight" let-isTimeLabel="isTimeLabel">
+              <div #segmentElement class="cal-hour-segment" [style.height.px]="segmentHeight"
+                [class.cal-hour-start]="segment.isStart" [class.cal-after-hour-start]="!segment.isStart"
+                [ngClass]="segment.cssClass" (mousedown)="startDragToCreate(segment, $event, segmentElement)">
+                <div class="cal-time" *ngIf="isTimeLabel">
+                  {{ segment.date | calendarDate:'weekViewHour':locale }}
+                </div>
+              </div>
+            </ng-template>
+            <mwl-calendar-week-view [viewDate]="viewDate" [events]="events"
+              [hourSegmentTemplate]="weekViewHourSegmentTemplate" [weekStartsOn]="weekStartsOn">
+            </mwl-calendar-week-view>
+          </div>
+          <small class="text-danger font-italic d-none" id="datearray" >
+            *Debe agregar al menos una fecha
+          </small>
         </div>
       </div>
     </div>
-    <div class="col-md-6 text-right">
-      <h3>{{ viewDate | calendarDate:('weekViewTitle') }}</h3>
+    <div class="row">
+      <div class="col text-center m-5">
+        <button type="button" class="btn btn-info" [disabled]="createForm.invalid"
+          (click)="theSubmit()">¡Crear evento!</button>
+      </div>
     </div>
   </div>
-  <br />
-  <div class="container overflow-auto h-25">
-    <ng-template #weekViewHourSegmentTemplate let-segment="segment" let-locale="locale"
-      let-segmentHeight="segmentHeight" let-isTimeLabel="isTimeLabel">
-      <div #segmentElement class="cal-hour-segment" [style.height.px]="segmentHeight"
-        [class.cal-hour-start]="segment.isStart" [class.cal-after-hour-start]="!segment.isStart"
-        [ngClass]="segment.cssClass" (mousedown)="startDragToCreate(segment, $event, segmentElement)">
-        <div class="cal-time" *ngIf="isTimeLabel">
-          {{ segment.date | calendarDate:'weekViewHour':locale }}
-        </div>
-      </div>
-    </ng-template>
-
-    <mwl-calendar-week-view [viewDate]="viewDate" [events]="events" [hourSegmentTemplate]="weekViewHourSegmentTemplate"
-      [weekStartsOn]="weekStartsOn">
-    </mwl-calendar-week-view>
-  </div>
-
 </div>
+
 <app-created *ngIf="this.created && !this.exceeded" [eventCreated]="eventCreated"></app-created>
 <div *ngIf="this.exceeded" class="text-danger">Ya excediste la cantidad maxima(10) de formularios por mes</div>

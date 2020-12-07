@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injectable, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CalendarEvent, CalendarEventTitleFormatter } from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTitleFormatter } from 'angular-calendar';
 import { WeekViewHourSegment } from 'calendar-utils';
 import { addDays, addMinutes, endOfWeek } from 'date-fns';
 import { fromEvent } from 'rxjs';
@@ -8,14 +8,6 @@ import { finalize, takeUntil } from 'rxjs/operators';
 import { EventControllerService, UsereventControllerService, UsereventEventControllerService } from 'src/app/openapi';
 import { TokenserviceService } from 'src/app/services/tokenservice.service';
 import { environment } from 'src/environments/environment';
-
-function floorToNearest(amount: number, precision: number) {
-  return Math.floor(amount / precision) * precision;
-}
-
-function ceilToNearest(amount: number, precision: number) {
-  return Math.ceil(amount / precision) * precision;
-}
 
 @Injectable()
 export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
@@ -32,9 +24,16 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
   }
 }
 
+function floorToNearest(amount: number, precision: number) {
+  return Math.floor(amount / precision) * precision;
+}
+
+function ceilToNearest(amount: number, precision: number) {
+  return Math.ceil(amount / precision) * precision;
+}
+
 @Component({
   selector: 'app-create',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
   providers: [
@@ -43,31 +42,24 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
       useClass: CustomEventTitleFormatter,
     },
   ],
-  styles: [
-    `
-      .disable-hover {
-        pointer-events: none;
-      }
-    `,
-  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class CreateComponent{
 
   createForm: FormGroup
-  created: boolean = false
-  eventCreated: Object
-  exceeded: boolean = false
-  recipients: Array<string> = []
-  emailForm: FormGroup
 
+  created: boolean = false  //manejamos transicion a Created
+  eventCreated: Object    //almacenamos evento para ser pasado a Created ademas de usarlo para email
+  exceeded: boolean = false   //true si ya paso los +10 formularios y muestra div
+  recipients: Array<string> = []  //almacena destinarios de email
+  emailForm: FormGroup 
+
+  //Calendar
   viewDate = new Date();
-
   events: CalendarEvent[] = [];
-
   dragToCreateActive = false;
-
   weekStartsOn: 0 = 0;
+  //
 
   constructor(
     private createFormBuilder: FormBuilder,
@@ -78,9 +70,9 @@ export class CreateComponent{
     private userControl: UsereventControllerService
   ) {
     this.createForm = this.createFormBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      password: ['', Validators.required]
+      name: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      description: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
     })
     this.emailForm = this.createFormBuilder.group({
       recipient: ['',Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])]
@@ -92,8 +84,12 @@ export class CreateComponent{
   }
 
   addRecipient(){
-    if (this.emailForm.valid) {
+    if (this.emailForm.valid && !(this.recipients.includes(this.emailForm.value.recipient))) {
       this.recipients.push(this.emailForm.value.recipient)
+      this.emailForm.markAsUntouched()
+      this.emailForm.setValue({
+        recipient: ''
+      })
     }
     else{
       console.log('Email erroneo')
@@ -203,6 +199,15 @@ export class CreateComponent{
     }
   }
 
+  actions: CalendarEventAction[] = [
+    {
+      label: '<i class="fa fa-fw fa-times"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.events = this.events.filter(iEvent => iEvent !== event);
+      }
+    }
+  ];
+
   startDragToCreate(
     segment: WeekViewHourSegment,
     mouseDownEvent: MouseEvent,
@@ -215,6 +220,7 @@ export class CreateComponent{
       meta: {
         tmpEvent: true,
       },
+      actions: this.actions
     };
     this.events = [...this.events, dragToSelectEvent];
     const segmentPosition = segmentElement.getBoundingClientRect();

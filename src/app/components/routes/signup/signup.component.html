@@ -8,7 +8,7 @@
                     Credenciales incorrectas
                 </div>
                 <div class="form-group mb-1">
-                    <input type="name" class="form-control pb_height-50 reverse" id="name" placeholder="Nombre"
+                    <input type="text" class="form-control pb_height-50 reverse" id="name" placeholder="Nombre"
                         formControlName="name" (input)="remo()">
                 </div>
                 <div *ngIf="signupForm.get('name').invalid && signupForm.get('name').touched">

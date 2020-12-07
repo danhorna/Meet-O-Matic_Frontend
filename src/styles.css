@@ -16,6 +16,16 @@ body {
 
 /* Forms */
 
+.pb {
+    -webkit-box-shadow: 1px 11px 68px -20px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 11px 68px -20px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 11px 68px -20px rgba(0, 0, 0, 0.75);
+}
+
+.onlypb {
+    padding: 30px;
+}
+
 .pb_form_v1 {
     padding: 50px;
     -webkit-box-shadow: 1px 11px 68px -20px rgba(0, 0, 0, 0.75);
