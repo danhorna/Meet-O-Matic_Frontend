@@ -1,29 +1,25 @@
-<div class="container">
-    <div class="h1">Desde aca podras ver tus eventos creados</div>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of myEvents; index as i">
-                <td>
-                    {{i+1}}
-                </td>
-                <td>
-                    {{item['name']}}
-                </td>
-                <td>
-                    <a class="nav-link" [routerLink]="['/myevent', item['id']]">Ver</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div *ngIf="!this.premiumUser">
-        Estas limitado a 10 formularios por mes, hazte premium para poder crear formularios sin limites!
-        <a [routerLink]="['/premium']">Hacerme premium</a>
+<div class="container p-0 pb_form_v1">
+    <div class="row col-md-12 bhoechie-tab-container m-0">
+            <div class="col-md-2 bhoechie-tab-menu">
+                <div class="list-group">
+                    <a type="button" class="list-group-item text-center active">
+                        <h4 class="fas fa-clipboard-list"></h4><br />Mis eventos
+                    </a>
+                    <a type="button" class="list-group-item text-center">
+                        <h4 class="fas fa-cogs"></h4><br />Configuración
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10 bhoechie-tab">
+                <div class="bhoechie-tab-content active text-center">
+                    <h1 class="glyphicon glyphicon-plane"></h1>
+                    <h3>Administrá tus eventos creados</h3>
+                </div>
+                <div class="bhoechie-tab-content text-center">
+                    <h1 class="glyphicon glyphicon-road"></h1>
+                    <h2>Proximamente!</h2>
+                    <h3>Estamos preparando esta sección</h3>
+                </div>
+            </div>
     </div>
 </div>

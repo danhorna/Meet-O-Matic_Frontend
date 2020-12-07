@@ -19,14 +19,12 @@ export class TokenserviceService implements TokenServiceInterface{
   }
 
   signOut(): void {
-    sessionStorage.clear();
+    localStorage.clear();
   }
 
   public saveToken(token: string): void {
-    sessionStorage.removeItem(environment.TOKEN_KEY);
-    const decodedToken = this.helper.decodeToken(token);
-    sessionStorage.setItem(environment.USER_KEY, JSON.stringify(decodedToken));
-    sessionStorage.setItem(environment.TOKEN_KEY, token);
+    localStorage.removeItem(environment.TOKEN_KEY);
+    localStorage.setItem(environment.TOKEN_KEY, token);
   }
 
   public isValid(): boolean{
@@ -43,15 +41,15 @@ export class TokenserviceService implements TokenServiceInterface{
   }
 
   public getToken(): string {
-    return sessionStorage.getItem(environment.TOKEN_KEY);
+    return localStorage.getItem(environment.TOKEN_KEY);
   }
 
   public saveUser(user): void {
-    sessionStorage.removeItem(environment.USER_KEY);
-    sessionStorage.setItem(environment.USER_KEY, JSON.stringify(user));
+    localStorage.removeItem(environment.USER_KEY);
+    localStorage.setItem(environment.USER_KEY, JSON.stringify(user));
   }
 
   public getUser(): any {
-    return JSON.parse(sessionStorage.getItem(environment.USER_KEY));
+    return this.helper.decodeToken(this.getToken());
   }
 }
