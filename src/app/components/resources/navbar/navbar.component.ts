@@ -13,16 +13,20 @@ export class NavbarComponent implements OnInit {
   user: UserModel
 
   constructor(
-    private tokenService: TokenserviceService, 
+    private tokenService: TokenserviceService,
     private activeRouter: Router) {
-      activeRouter.events.subscribe((val)=>{
-        if(val instanceof NavigationStart){
-          setTimeout(function () { test(); }, 400);
-        }
-      })
-    }
+    activeRouter.events.subscribe((val) => {
+      if (val instanceof NavigationStart) {
+        setTimeout(function () { test(); });
+      }
+    })
+  }
 
   ngOnInit(): void {
+  }
+
+  exists(){
+    return location.pathname == '/404'
   }
 
   isLogged(): boolean {
@@ -36,11 +40,11 @@ export class NavbarComponent implements OnInit {
     this.activeRouter.navigateByUrl('/')
   }
 
-  isActive(path){
+  isActive(path) {
     return path == location.pathname
   }
 
-  load(){
+  load() {
     setTimeout(function () { test(); });
   }
 
@@ -49,33 +53,35 @@ export class NavbarComponent implements OnInit {
 
 // ---------Responsive-navbar-active-animation-----------
 function test() {
-  var tabsNewAnim = $('#navbarSupportedContent');
-  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
-  var activeItemNewAnim = tabsNewAnim.find('.active');
-  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
-  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
-  var itemPosNewAnimTop = activeItemNewAnim.position();
-  var itemPosNewAnimLeft = activeItemNewAnim.position();
-  $(".hori-selector").css({
-    "top": itemPosNewAnimTop.top + "px",
-    "left": itemPosNewAnimLeft.left + "px",
-    "height": activeWidthNewAnimHeight + "px",
-    "width": activeWidthNewAnimWidth + "px"
-  });
-  $("#navbarSupportedContent").on("click", "li", function (e) {
-    $('#navbarSupportedContent ul li').removeClass("active");
-    $(this).addClass('active');
-    var activeWidthNewAnimHeight = $(this).innerHeight();
-    var activeWidthNewAnimWidth = $(this).innerWidth();
-    var itemPosNewAnimTop = $(this).position();
-    var itemPosNewAnimLeft = $(this).position();
+  if (location.pathname != '/404') {
+    var tabsNewAnim = $('#navbarSupportedContent');
+    var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+    var activeItemNewAnim = tabsNewAnim.find('.active');
+    var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+    var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+    var itemPosNewAnimTop = activeItemNewAnim.position();
+    var itemPosNewAnimLeft = activeItemNewAnim.position();
     $(".hori-selector").css({
       "top": itemPosNewAnimTop.top + "px",
       "left": itemPosNewAnimLeft.left + "px",
       "height": activeWidthNewAnimHeight + "px",
       "width": activeWidthNewAnimWidth + "px"
     });
-  });
+    $("#navbarSupportedContent").on("click", "li", function (e) {
+      $('#navbarSupportedContent ul li').removeClass("active");
+      $(this).addClass('active');
+      var activeWidthNewAnimHeight = $(this).innerHeight();
+      var activeWidthNewAnimWidth = $(this).innerWidth();
+      var itemPosNewAnimTop = $(this).position();
+      var itemPosNewAnimLeft = $(this).position();
+      $(".hori-selector").css({
+        "top": itemPosNewAnimTop.top + "px",
+        "left": itemPosNewAnimLeft.left + "px",
+        "height": activeWidthNewAnimHeight + "px",
+        "width": activeWidthNewAnimWidth + "px"
+      });
+    });
+  }
 }
 
 $(window).on('resize', function () {
