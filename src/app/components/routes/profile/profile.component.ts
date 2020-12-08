@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsereventEventControllerService } from 'src/app/openapi';
+import { Router } from '@angular/router';
+import { EventControllerService, EventResponseControllerService, UsereventEventControllerService } from 'src/app/openapi';
 import { UsereventControllerService } from 'src/app/openapi/api/usereventController.service';
 import { TokenserviceService } from 'src/app/services/tokenservice.service';
 
@@ -11,22 +12,51 @@ import { TokenserviceService } from 'src/app/services/tokenservice.service';
 export class ProfileComponent implements OnInit {
 
   myEvents: Array<Object> = []
+  eventsResponses: Array<number> = []
   premiumUser: boolean 
 
   constructor(
     private userController: UsereventEventControllerService,
     private tokenController: TokenserviceService,
-    private UserController: UsereventControllerService
+    private UserController: UsereventControllerService,
+    private responseController: EventResponseControllerService,
+    private eventController : EventControllerService,
+    private activeRouter: Router
   ) { }
 
   ngOnInit(): void {
     const user = this.tokenController.getUser()
     this.userController.usereventEventControllerFind(user.id).subscribe((res)=>{
       this.myEvents = res
+      this.loadResponses()
     })
     this.UserController.usereventControllerFindById(user.id).subscribe((res)=>{
       this.premiumUser = res['premium']
     })
+  }
+
+  disableEvent(aEvent){
+    this.eventController.eventControllerUpdateById(aEvent, {"active" : false}).subscribe(res=>{
+      this.activeRouter.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
+        this.activeRouter.navigateByUrl('/profile')
+      })
+    })
+  }
+
+  enableEvent(aEvent){
+    this.eventController.eventControllerUpdateById(aEvent, {"active" : true}).subscribe(res=>{
+      this.activeRouter.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
+        this.activeRouter.navigateByUrl('/profile')
+      })
+    })
+  }
+
+  loadResponses() {
+    for (let i = 0; i < this.myEvents.length; i++) {
+      this.responseController.eventResponseControllerFind(this.myEvents[i]['id']).subscribe((res)=> {
+        this.eventsResponses[i] = res.length
+      })
+    }
   }
 
 }

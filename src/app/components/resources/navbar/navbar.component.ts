@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
     private activeRouter: Router) {
     activeRouter.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
-        setTimeout(function () { test(); }, 100);
+        setTimeout(function () { test(); }, 200);
       }
     })
   }

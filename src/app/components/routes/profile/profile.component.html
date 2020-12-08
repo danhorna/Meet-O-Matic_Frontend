@@ -1,25 +1,55 @@
 <div class="container p-0 pb_form_v1">
     <div class="row col-md-12 bhoechie-tab-container m-0">
-            <div class="col-md-2 bhoechie-tab-menu">
-                <div class="list-group">
-                    <a type="button" class="list-group-item text-center active">
-                        <h4 class="fas fa-clipboard-list"></h4><br />Mis eventos
-                    </a>
-                    <a type="button" class="list-group-item text-center">
-                        <h4 class="fas fa-cogs"></h4><br />Configuración
-                    </a>
+        <div class="col-md-2 bhoechie-tab-menu">
+            <div class="list-group">
+                <a type="button" class="list-group-item text-center active">
+                    <h4 class="fas fa-clipboard-list"></h4><br />Mis eventos
+                </a>
+                <a type="button" class="list-group-item text-center">
+                    <h4 class="fas fa-cogs"></h4><br />Configuración
+                </a>
+            </div>
+        </div>
+        <div class="col-md-10 bhoechie-tab pt-5 pb-5">
+            <div class="bhoechie-tab-content active text-center p-0">
+                <h3>Administrá tus eventos</h3>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar border border-secondary rounded">
+                    <table class="table table-sm table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Respuestas</th>
+                                <th><i class="fas fa-cog"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of myEvents; index as i">
+                                <td class="align-middle">
+                                    {{item['name']}}
+                                </td>
+                                <td class="align-middle" *ngIf="!eventsResponses[i]">
+                                    0
+                                </td>
+                                <td class="align-middle" *ngIf="eventsResponses[i]">
+                                    {{eventsResponses[i]}}
+                                </td>
+                                <td class="align-middle">
+                                    <a type="button" (click)="disableEvent(item['id'])" *ngIf="item['active']">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </a>
+                                    <a type="button" (click)="enableEvent(item['id'])" *ngIf="!item['active']">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="col-md-10 bhoechie-tab">
-                <div class="bhoechie-tab-content active text-center">
-                    <h1 class="glyphicon glyphicon-plane"></h1>
-                    <h3>Administrá tus eventos creados</h3>
-                </div>
-                <div class="bhoechie-tab-content text-center">
-                    <h1 class="glyphicon glyphicon-road"></h1>
-                    <h2>Proximamente!</h2>
-                    <h3>Estamos preparando esta sección</h3>
-                </div>
+            <div class="bhoechie-tab-content text-center">
+                <h2>Proximamente!</h2>
+                <h3>Estamos preparando esta sección</h3>
             </div>
+        </div>
     </div>
 </div>
