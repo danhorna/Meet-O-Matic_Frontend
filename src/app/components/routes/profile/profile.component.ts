@@ -15,6 +15,8 @@ export class ProfileComponent implements OnInit {
   myEvents: Array<Object> = []
   eventsResponses: Array<number> = []
   premiumUser: boolean 
+  toClone: boolean = false
+  eventToClone: object
 
   constructor(
     private userController: UsereventEventControllerService,
@@ -58,6 +60,11 @@ export class ProfileComponent implements OnInit {
         this.eventsResponses[i] = res.length
       })
     }
+  }
+
+  cloneEvent(aEvent) {
+    this.eventToClone = aEvent
+    this.toClone = true
   }
 
 }

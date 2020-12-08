@@ -40,3 +40,8 @@ textarea {
     color: #5161CE;
     background-color: #dddddd;
 }
+
+a, a:hover {
+    text-decoration: none;
+    color: black;
+}

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injectable, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injectable, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarEvent, CalendarEventAction, CalendarEventTitleFormatter } from 'angular-calendar';
 import { WeekViewHourSegment } from 'calendar-utils';
 import { addDays, addMinutes, endOfWeek } from 'date-fns';
+import { event } from 'jquery';
 import { fromEvent } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { EventControllerService, UsereventControllerService, UsereventEventControllerService } from 'src/app/openapi';
@@ -44,7 +45,9 @@ function ceilToNearest(amount: number, precision: number) {
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class CreateComponent{
+export class CreateComponent implements OnInit {
+
+  @Input() eventToClone: Object
 
   createForm: FormGroup
 
@@ -52,9 +55,9 @@ export class CreateComponent{
   eventCreated: Object    //almacenamos evento para ser pasado a Created ademas de usarlo para email
   exceeded: boolean = false   //true si ya paso los +10 formularios y muestra div
   recipients: Array<string> = []  //almacena destinarios de email
-  emailForm: FormGroup 
+  emailForm: FormGroup
   loading: boolean = false
-  err : boolean = false
+  err: boolean = false
 
   //Calendar
   viewDate = new Date();
@@ -77,15 +80,32 @@ export class CreateComponent{
       password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
     })
     this.emailForm = this.createFormBuilder.group({
-      recipient: ['',Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])]
+      recipient: ['', Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])]
     })
   }
 
-  removeEmail(i){
+  ngOnInit() {
+    if (this.eventToClone) {
+      this.createForm.setValue({
+        name: this.eventToClone['name'],
+        description: this.eventToClone['description'],
+        password: ''
+      })
+      for (var i = 0; i < this.eventToClone['dates'].length; i++){
+        this.eventToClone['dates'][i]['start'] = new Date(this.eventToClone['dates'][i]['start'])
+        if(this.eventToClone['dates'][i]['end'])
+          this.eventToClone['dates'][i]['end'] = new Date(this.eventToClone['dates'][i]['end'])
+        this.eventToClone['dates'][i]['actions'] = this.actions
+      }
+      this.events = this.eventToClone['dates']
+    }
+  }
+
+  removeEmail(i) {
     this.recipients.splice(i, 1)
   }
 
-  addRecipient(){
+  addRecipient() {
     if (this.emailForm.valid && !(this.recipients.includes(this.emailForm.value.recipient))) {
       this.recipients.push(this.emailForm.value.recipient)
       this.emailForm.markAsUntouched()
@@ -93,12 +113,12 @@ export class CreateComponent{
         recipient: ''
       })
     }
-    else{
+    else {
       console.log('Email erroneo')
     }
   }
 
-  compareWithToday(aDate): boolean{
+  compareWithToday(aDate): boolean {
     var aux = new Date(aDate)
     const today = new Date()
     const todayMonth = today.getMonth()
@@ -107,14 +127,14 @@ export class CreateComponent{
   }
 
   randomString(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
- }
+  }
 
   theSubmit() {
     if (this.createForm.valid && !this.err) {
@@ -130,18 +150,18 @@ export class CreateComponent{
         }
         if (this.tokenService.isValid()) {
           const user = this.tokenService.getUser()
-          this.userController.usereventEventControllerFind(user.id).subscribe((res)=>{
+          this.userController.usereventEventControllerFind(user.id).subscribe((res) => {
             var contador = 0
-            for (var i = 0; i < res.length; i++){
+            for (var i = 0; i < res.length; i++) {
               if (this.compareWithToday(res[i]['creationDate']))
                 contador++
             }
-            this.userControl.usereventControllerFindById(user.id).subscribe(res=>{
-              if (contador < 10 || res['premium']){
-                this.userController.usereventEventControllerCreate(user.id,toSend).subscribe((res) => {
+            this.userControl.usereventControllerFindById(user.id).subscribe(res => {
+              if (contador < 10 || res['premium']) {
+                this.userController.usereventEventControllerCreate(user.id, toSend).subscribe((res) => {
                   this.eventCreated = res
                   this.created = true
-                  if (this.recipients.length > 0){
+                  if (this.recipients.length > 0) {
                     const emailToSend = {
                       recipients: this.recipients,
                       eventurl: environment.SITE_URL + environment.EVENT_PATH + this.eventCreated['id'],
@@ -153,7 +173,7 @@ export class CreateComponent{
                   console.log('Server error')
                 })
               }
-              else{
+              else {
                 this.err = true
                 this.loading = false
               }
@@ -168,7 +188,7 @@ export class CreateComponent{
           this.eventController.eventControllerCreate(toSend).subscribe((res) => {
             this.eventCreated = res
             this.created = true
-            if (this.recipients.length > 0){
+            if (this.recipients.length > 0) {
               const emailToSend = {
                 recipients: this.recipients,
                 eventurl: environment.SITE_URL + environment.EVENT_PATH + this.eventCreated['id'],
