@@ -72,7 +72,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active) {
     display: none;
 }
 
-a {
+a, a:hover {
     text-decoration: none;
     color: black;
 }

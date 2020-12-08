@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventControllerService, EventResponseControllerService, UsereventEventControllerService } from 'src/app/openapi';
 import { UsereventControllerService } from 'src/app/openapi/api/usereventController.service';
@@ -7,7 +7,8 @@ import { TokenserviceService } from 'src/app/services/tokenservice.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProfileComponent implements OnInit {
 

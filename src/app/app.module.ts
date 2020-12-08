@@ -28,6 +28,7 @@ import { LoggedGuard } from './services/guards/logged.guard';
 import { NotfoundComponent } from './components/routes/notfound/notfound.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import * as $ from 'jquery';
 
@@ -58,7 +59,8 @@ import * as $ from 'jquery';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    NgbModule
   ],
   providers: [
     TokenserviceService,
