@@ -54,7 +54,8 @@ export class SignupComponent implements OnInit {
       const toSend = {
         email: this.signupForm.value.email,
         name: this.signupForm.value.name,
-        password: this.signupForm.value.password
+        password: this.signupForm.value.password,
+        roles: ['normal']
       }
       this.userController.userControllerSignUp(toSend).subscribe((res) => {
         this.loading = false
