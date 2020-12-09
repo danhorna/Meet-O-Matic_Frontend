@@ -14,6 +14,8 @@ export class PremiumComponent implements OnInit {
   public payPalConfig: IPayPalConfig;
   premiumUser: boolean
   user: Object
+  paypalError: boolean = false
+  paypalCancel: boolean = false
 
   constructor(
     private UserController: UsereventControllerService,
@@ -83,9 +85,11 @@ export class PremiumComponent implements OnInit {
         })
       },
       onCancel: (data, actions) => {
+        this.paypalCancel = true
         // Al cancelar transaccion, *data* almacena el ID de la orden
       },
       onError: err => {
+        this.paypalError = true
         // Error interno de PayPal
       }
     };

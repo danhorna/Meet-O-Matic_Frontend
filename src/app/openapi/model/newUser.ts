@@ -19,6 +19,7 @@ export interface NewUser {
     email: string;
     id?: string;
     premium?: boolean;
+    roles?: Array<string>;
     password: string;
 }
 

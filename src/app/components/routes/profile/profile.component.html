@@ -49,6 +49,9 @@
                     </table>
                 </div>
             </div>
+            <div *ngIf="!this.premiumUser">
+                <p><small>*Estás limitado a 10 formularios por mes, hazte <a [routerLink]="['/premium']" class="text-danger">premium</a> para poder crear formularios sin limites!</small></p>
+            </div>
             <div class="bhoechie-tab-content text-center">
                 <h2>Proximamente!</h2>
                 <h3>Estamos preparando esta sección</h3>

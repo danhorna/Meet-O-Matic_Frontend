@@ -1,7 +1,37 @@
 <div class="container" *ngIf="!this.premiumUser">
-    <h1>Ser premium por U$D 0.01!</h1>
-    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="heading text-center">Suscripción</h1>
+            <hr>
+            <p>¡Podrás crear eventos sin limites realizando un único pago de $0.01!</p>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <h4 class="text-center heading">Metodos de pago aceptados</h4>
+            <hr>
+            <div class="paypal-error text-center text-danger mb-2" *ngIf="this.paypalCancel">Cancelaste la compra</div>
+            <div class="paypal-error text-center text-danger mb-2" *ngIf="this.paypalError">Problema al procesar el pago
+            </div>
+            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+        </div>
+    </div>
 </div>
 <div class="container" *ngIf="this.premiumUser">
-    Ya eres usuario premium!
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading text-center">Ya eres usuario premium!</h4>
+                <hr>
+                <p>
+                    Estas habilitado a crear eventos ilimitados. Gracias por colaborar con el sitio.
+                </p>
+                <p class="text-center">
+                    <a [routerLink]="['/']">Ir al inicio</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+
+    </div>
 </div>

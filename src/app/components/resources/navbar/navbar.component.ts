@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
   }
 
   exists(){
-    return location.pathname == '/404'
+    return (location.pathname == '/404' || location.pathname == '/premium')
   }
 
   isLogged(): boolean {
@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit {
 
 // ---------Responsive-navbar-active-animation-----------
 function test() {
-  if (location.pathname != '/404') {
+  if (location.pathname != '/404' && location.pathname != '/premium' ) {
     var tabsNewAnim = $('#navbarSupportedContent');
     var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
     var activeItemNewAnim = tabsNewAnim.find('.active');

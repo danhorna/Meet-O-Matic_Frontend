@@ -19,5 +19,6 @@ export interface UsereventPartial {
     email?: string;
     id?: string;
     premium?: boolean;
+    roles?: Array<string>;
 }
 

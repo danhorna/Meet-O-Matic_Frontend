@@ -24,7 +24,7 @@ export interface EventWithRelations {
     password: string;
     auth: string;
     usereventId?: string;
-    creationDate: string;
+    creationDate?: string;
     responses?: Array<ResponseWithRelations>;
 }
 

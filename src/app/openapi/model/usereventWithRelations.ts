@@ -21,6 +21,7 @@ export interface UsereventWithRelations {
     email: string;
     id?: string;
     premium?: boolean;
+    roles?: Array<string>;
     events?: Array<EventWithRelations>;
     userCredentials?: UserCredentialsWithRelations;
 }

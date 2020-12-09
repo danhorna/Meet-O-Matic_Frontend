@@ -20,6 +20,6 @@ export interface Event {
     password: string;
     auth: string;
     usereventId?: string;
-    creationDate: string;
+    creationDate?: string;
 }
 

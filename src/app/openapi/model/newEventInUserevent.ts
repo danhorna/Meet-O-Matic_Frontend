@@ -22,6 +22,6 @@ export interface NewEventInUserevent {
     password: string;
     auth: string;
     usereventId?: string;
-    creationDate: string;
+    creationDate?: string;
 }
 

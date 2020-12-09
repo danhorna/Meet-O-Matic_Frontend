@@ -145,7 +145,6 @@ export class CreateComponent implements OnInit {
           description: this.createForm.value.description,
           dates: this.events,
           password: this.createForm.value.password,
-          creationDate: new Date().toString(),
           auth: this.randomString(5)
         }
         if (this.tokenService.isValid()) {
@@ -161,7 +160,7 @@ export class CreateComponent implements OnInit {
                 this.userController.usereventEventControllerCreate(user.id, toSend).subscribe((res) => {
                   this.eventCreated = res
                   this.created = true
-                  if (this.recipients.length > 0) {
+                  if (this.recipients.length > 0 && !res) {
                     const emailToSend = {
                       recipients: this.recipients,
                       eventurl: environment.SITE_URL + environment.EVENT_PATH + this.eventCreated['id'],
