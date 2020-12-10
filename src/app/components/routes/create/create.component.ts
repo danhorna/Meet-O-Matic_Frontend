@@ -72,7 +72,8 @@ export class CreateComponent implements OnInit {
     private tokenService: TokenserviceService,
     private userController: UsereventEventControllerService,
     private eventController: EventControllerService,
-    private userControl: UsereventControllerService
+    private userControl: UsereventControllerService,
+    private token: TokenserviceService,
   ) {
     this.createForm = this.createFormBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
@@ -149,6 +150,7 @@ export class CreateComponent implements OnInit {
         }
         if (this.tokenService.isValid()) {
           const user = this.tokenService.getUser()
+          this.userController.configuration.accessToken = this.token.getToken();
           this.userController.usereventEventControllerFind(user.id).subscribe((res) => {
             var contador = 0
             for (var i = 0; i < res.length; i++) {
@@ -169,7 +171,7 @@ export class CreateComponent implements OnInit {
                     this.eventController.eventControllerSendEmail(emailToSend).subscribe()
                   }
                 }, (err) => {
-                  console.log('Server error')
+                  console.log('Server error1')
                 })
               }
               else {
@@ -177,10 +179,11 @@ export class CreateComponent implements OnInit {
                 this.loading = false
               }
             }, (err) => {
-              console.log('Server error')
+              console.log('Server error2')
             })
           }, (err) => {
-            console.log('Server error')
+            console.log(err)
+            console.log('Server error3')
           })
         }
         else {

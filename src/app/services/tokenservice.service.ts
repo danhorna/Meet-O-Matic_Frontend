@@ -29,8 +29,7 @@ export class TokenserviceService implements TokenServiceInterface{
 
   public isValid(): boolean{
     if (this.getToken()){
-      const decodedToken = this.helper.decodeToken(this.getToken());
-      return this.helper.isTokenExpired(this.getToken(),decodedToken.exp);
+      return !(this.helper.isTokenExpired(this.getToken()))
     }
     return false;
   } 

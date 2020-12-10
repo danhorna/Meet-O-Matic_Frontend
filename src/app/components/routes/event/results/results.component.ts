@@ -11,7 +11,8 @@ export class ResultsComponent implements OnInit {
 
   @Input() event: Object
   resultados: Array<number> = []
-
+  votes: Array<any> = []
+  colors = []
   constructor(
     private responsesController: EventResponseControllerService
   ) { }
@@ -21,19 +22,24 @@ export class ResultsComponent implements OnInit {
       if (responses.length > 0) {
         document.getElementById("responses").classList.remove("d-none")
         for (var i = 0; i < this.event['dates'].length; i++) {
+          this.colors.push(this.getRandomColor())
           var theDate = this.event['dates'][i]
           var cont = 0
+          const usersVotes = []
           for (var j = 0; j < responses.length; j++) {
             for (var k = 0; k < responses[j]['prefdates'].length; k++) {
               var compDate = responses[j]['prefdates'][k]
               if (theDate['id'] == compDate['id']) {
+                usersVotes.push(responses[j]['name'])
                 cont++
                 break
               }
             }
           }
+          this.votes.push(usersVotes)
           this.resultados.push(cont)
         }
+        console.log(this.votes)
         this.graph()
       }
       else {
@@ -59,7 +65,6 @@ export class ResultsComponent implements OnInit {
   }
 
   graph() {
-    var colors = []
     var votes = []
     var labels = []
     for (var i in this.event['dates']) {
@@ -68,7 +73,6 @@ export class ResultsComponent implements OnInit {
       aux = aux + ' hasta: ' + this.convertDate(this.event['dates'][i]['end'])
       labels.push(aux)
       votes.push(this.resultados[i])
-      colors.push(this.getRandomColor())
     }
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
@@ -78,7 +82,7 @@ export class ResultsComponent implements OnInit {
         datasets: [{
           label: '',
           data: votes,
-          backgroundColor: colors,
+          backgroundColor: this.colors,
           borderColor: '#FFF',
           borderWidth: 1
         }]
@@ -93,7 +97,7 @@ export class ResultsComponent implements OnInit {
         },
         title: {
           display: true,
-          text: 'Custom Chart Title'
+          text: 'Resultados del evento: ' + this.event['name']
         },
         legend: {
           position: (screen.width < 768) ? 'top' : 'right'

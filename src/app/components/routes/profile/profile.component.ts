@@ -32,6 +32,8 @@ export class ProfileComponent implements OnInit {
     this.userController.usereventEventControllerFind(user.id).subscribe((res)=>{
       this.myEvents = res
       this.loadResponses()
+    }, (err) => {
+      console.log(err)
     })
     this.UserController.usereventControllerFindById(user.id).subscribe((res)=>{
       this.premiumUser = res['premium']
@@ -52,6 +54,10 @@ export class ProfileComponent implements OnInit {
         this.activeRouter.navigateByUrl('/profile')
       })
     })
+  }
+
+  eventResults(item){
+    this.activeRouter.navigateByUrl('/event/' + item['id'] + '?auth=' + item['auth'])
   }
 
   loadResponses() {

@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit {
 
 // ---------Responsive-navbar-active-animation-----------
 function test() {
-  if (location.pathname != '/404' && location.pathname != '/premium' ) {
+  if (location.pathname != '/404' && location.pathname != '/premium') {
     var tabsNewAnim = $('#navbarSupportedContent');
     var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
     var activeItemNewAnim = tabsNewAnim.find('.active');

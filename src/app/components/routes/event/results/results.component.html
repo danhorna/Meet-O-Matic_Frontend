@@ -1,6 +1,35 @@
 <div id="noresponses" class="container d-none">
-    No hay respuestas aun
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-warning text-center" role="alert">
+                <p>Aún no hay respuestas para este evento</p>
+                <a class="alert-link" [routerLink]="['/profile']">Ir al perfil</a>.
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
 </div>
-<div id="responses" class="container d-none">
-    <canvas id="myChart" width="100px" height="100px"></canvas>
+<div id="responses" class="container d-none bg-white pb_form_v1">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row col-md-12">
+                <h3>Votos:</h3>
+            </div>
+            <div class="container">
+                <div class="row col-md-12" *ngFor="let item of this.event['dates']; index as i">
+                    <div class="col-xs-4" class="square" [ngStyle]="{'background-color': this.colors[i]}">
+                    </div>
+                    <div class="col-xs-8">
+                        <span *ngFor="let vote of this.votes[i]; index as j" class="ml-2">
+                            <span>{{vote}}</span><span *ngIf="!(this.votes[i].length == (j + 1))">,</span><span *ngIf="(this.votes[i].length == (j + 1))">.</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <canvas id="myChart" width="100px" height="100px"></canvas>
+        </div>
+    </div>
 </div>
