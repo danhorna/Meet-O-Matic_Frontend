@@ -25,8 +25,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $(window).on('resize', function () {
-      setTimeout(function () { this.test(); }, 500);
+    $(window).on('resize', ()=> {
+      setTimeout(()=> { this.test(); }, 500);
     });
   }
 

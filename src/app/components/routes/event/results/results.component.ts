@@ -39,7 +39,6 @@ export class ResultsComponent implements OnInit {
           this.votes.push(usersVotes)
           this.resultados.push(cont)
         }
-        console.log(this.votes)
         this.graph()
       }
       else {
@@ -92,7 +91,7 @@ export class ResultsComponent implements OnInit {
           if (screen.width < 768)
             chart.options.legend.position = 'top'
           else
-            chart.options.legend.position = 'right'
+            chart.options.legend.position = 'bottom'
           chart.update();
         },
         title: {
@@ -100,7 +99,7 @@ export class ResultsComponent implements OnInit {
           text: 'Resultados del evento: ' + this.event['name']
         },
         legend: {
-          position: (screen.width < 768) ? 'top' : 'right'
+          position: (screen.width < 768) ? 'top' : 'bottom'
         },
         tooltips: {
           displayColors: false,
