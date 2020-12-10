@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EventControllerService, EventResponseControllerService } from 'src/app/openapi';
 import { Chart } from 'chart.js';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-results',
@@ -47,7 +48,9 @@ export class ResultsComponent implements OnInit {
     })
   }
 
-
+  eventUrl(){
+    return environment.SITE_URL + 'event/' + this.event['id']
+  }
 
   getRandomColor() {
     var letters = '0123456789ABCDEF';

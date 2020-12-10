@@ -16,10 +16,21 @@
             <canvas id="myChart" width="100px" height="100px"></canvas>
         </div>
         <div class="col-md-4">
-            <div class="row col-md-12">
-                <h3>Votos:</h3>
+            <div class="card text-center">
+                <div class="card-body cardmid">
+                    <h5 class="card-title">Link para compartir</h5>
+                    <input type="text" class="w-75" disabled value="{{this.eventUrl()}}">
+                    <p class="card-text mt-3">Con la siguiente contraseña: <span
+                            class="font-weight-bold">{{this.event['password']}}</span>
+                    </p>
+                </div>
             </div>
-            <div class="container">
+            <div class="row col-md-12 m-0">
+                <div class="mt-4 text-center col">
+                    <h3 class="">¿Quién votó?</h3>
+                </div>
+            </div>
+            <div class="container mt-3">
                 <div class="row col-md-12" *ngFor="let item of this.event['dates']; index as i">
                     <div class="col-xs-4" class="square" [ngStyle]="{'background-color': this.colors[i]}">
                     </div>
@@ -31,5 +42,7 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
     </div>
 </div>

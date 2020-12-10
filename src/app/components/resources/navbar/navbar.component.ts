@@ -91,7 +91,4 @@ export class NavbarComponent implements OnInit {
 
 }
 
-// ---------Responsive-navbar-active-animation-----------
-
-
 
