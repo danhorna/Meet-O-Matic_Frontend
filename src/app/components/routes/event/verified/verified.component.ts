@@ -22,6 +22,8 @@ export class VerifiedComponent implements OnInit {
   view: CalendarView = CalendarView.Week;
   viewDate: Date = new Date();
   events = []
+  loading: boolean = false
+  err: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +33,7 @@ export class VerifiedComponent implements OnInit {
   ) {
     this.responseForm = this.responseFormBuilder.group({
       prefdates: [null],
-      name: ['', Validators.required],
+      name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       message: ['']
     })
   }
@@ -42,6 +44,7 @@ export class VerifiedComponent implements OnInit {
       for (var i = 0; i < this.events.length; i++) {
         this.events[i].start = new Date(this.events[i].start)
         this.events[i].end = new Date(this.events[i].end)
+        this.events[i].actions = []
       }
       this.theEvent = res
       this.access = true
@@ -65,8 +68,9 @@ export class VerifiedComponent implements OnInit {
   }
 
   theSubmit() {
-    if (this.responseForm.valid) {
+    if (this.responseForm.valid && !this.err) {
       if (this.datesSelected.length > 0) {
+        this.loading = true
         const toSend = {
           prefdates: this.datesSelected,
           name: this.responseForm.value.name,
@@ -74,6 +78,9 @@ export class VerifiedComponent implements OnInit {
         }
         this.eventresponseController.eventResponseControllerCreate(this.theEvent['id'], toSend).subscribe((res) => {
           this.saved = true
+        },()=>{
+          this.loading= false
+          this.err = true
         })
       }
       else {

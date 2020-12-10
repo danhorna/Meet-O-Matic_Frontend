@@ -1,20 +1,34 @@
 <div class="container" *ngIf="this.exists && this.waitingpass && !this.resultAccess">
-    <div class="card text-center">
-        <div class="card-header">
-            Acceder a un formulario
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card text-center onlygrad">
+                <div class="card-header">
+                    Acceder a un formulario
+                </div>
+                <div class="card-body">
+                    <form class="col-sm-12" [formGroup]="passForm" (ngSubmit)="theSubmit()">
+                        <input type="password" class="form-control pb_height-50 reverse" id="password" placeholder="Contraseña"
+                            formControlName="password" autocomplete="on">
+                        <button class="btn btn-primary mt-4" type="submit">Acceder</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <form class="col-sm-6" [formGroup]="passForm" (ngSubmit)="theSubmit()">
-                <h5 class="card-title">Ingrese la contraseña:</h5>
-                <input type="password" class="form-control" id="password" placeholder="Ingresar descripcion"
-                    formControlName="password">
-                <button class="btn btn-primary" type="submit">Submit</button>
-            </form>
-        </div>
+        <div class="col-md-3"></div>
     </div>
 </div>
 <div class="container" *ngIf="!this.exists">
-    El evento no existe
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-warning text-center" role="alert">
+                <p>El evento no existe</p>
+                <a class="alert-link" [routerLink]="['/']">Ir al inicio</a>.
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
 </div>
-<app-verified *ngIf = 'approved' [eventApp]="actualEvent"></app-verified>
-<app-results *ngIf = 'resultAccess' [event]="actualEvent"></app-results>
+<app-verified *ngIf='approved' [eventApp]="actualEvent"></app-verified>
+<app-results *ngIf='resultAccess' [event]="actualEvent"></app-results>

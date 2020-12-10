@@ -2,19 +2,6 @@
     color: red;
 }
 
-.cal-week-view .cal-time-events {
-    max-height: 60vh;
-    overflow-y: auto;
-}
-
-.cal-day-columns {
-    height: 100%;
-}
-
-.cal-day-headers {
-    margin-right: 14.5px;
-}
-
 textarea {
     height: 100px!important;
     resize: none;

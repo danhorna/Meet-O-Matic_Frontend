@@ -34,11 +34,11 @@
                                     {{eventsResponses[i]}}
                                 </td>
                                 <td class="align-middle">
-                                    <a type="button" (click)="disableEvent(item['id'])" *ngIf="item['active']" placement="left" ngbTooltip="Habilitar" tooltipClass="my-custom-class">
-                                        <i class="fas fa-eye-slash"></i>
-                                    </a>
-                                    <a type="button" (click)="enableEvent(item['id'])" *ngIf="!item['active']" placement="left" ngbTooltip="Deshabilitar">
+                                    <a type="button" (click)="disableEvent(item['id'])" *ngIf="item['active']" placement="left" ngbTooltip="Deshabilitar" tooltipClass="my-custom-class">
                                         <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a type="button" (click)="enableEvent(item['id'])" *ngIf="!item['active']" placement="left" ngbTooltip="Habilitar">
+                                        <i class="fas fa-eye-slash"></i>
                                     </a>
                                     <a type="button" (click)="cloneEvent(item)" class="ml-3" placement="right" ngbTooltip="Clonar">
                                         <i class="fas fa-clone"></i>

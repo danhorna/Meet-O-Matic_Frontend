@@ -1,63 +1,91 @@
-<div class="container" *ngIf="this.access && !this.saved">
-    <div *ngIf="this.theEvent['active']">
-        <form class="col-sm-6" [formGroup]="responseForm">
-            <div class="form-group">
-                <label for="name">Nombre: <span class="text-danger"
-                        *ngIf="responseForm.get('name').errors && responseForm.get('name').hasError('required')">*</span></label>
-                <input type="text" class="form-control" id="name" placeholder="Ingresa el nombre"
-                    formControlName="name">
-            </div>
-            <div *ngIf="responseForm.get('name').invalid && 
-                  responseForm.get('name').errors && 
-                  (responseForm.get('name').dirty || responseForm.get('name').touched)">
-                <small class="text-danger" *ngIf="responseForm.get('name').hasError('required')">
-                    This field is required.
-                </small>
-            </div>
-            <div class="form-group">
-                <label for="description">Mensaje:</label>
-                <input type="text" class="form-control" id="description" placeholder="Ingresar descripcion"
-                    formControlName="message">
-            </div>
-            <p id="datearray" class="text-danger d-none">Debe agregar al menos una fecha</p>
-            <button type="button" class="btn btn-primary" [disabled]="responseForm.invalid"
-                (click)="theSubmit()">Submit</button>
+<div *ngIf="this.access && !this.saved">
+  <div *ngIf="this.theEvent['active']">
+    <div class="container bg-white pb pt-5">
+      <div class="row">
+        <form class="col-md-4 bg-white onlypb pt-0" [formGroup]="responseForm">
+          <h4 class="font-weight-bold">
+            Tus datos:
+          </h4>
+          <div class="form-group mb-1 mt-2">
+            <input type="text" class="form-control pb_height-50 reverse" id="name" placeholder="Nombre(*)"
+              formControlName="name">
+          </div>
+          <div *ngIf="responseForm.get('name').invalid && responseForm.get('name').touched">
+            <p>
+              <small class="text-danger font-italic">
+                Mínimo 3 carateres
+              </small>
+            </p>
+          </div>
+          <div class="form-group mb-1 mt-4">
+            <textarea class="form-control pb_height-50 reverse" id="description" placeholder="Mensaje"
+              formControlName="message"></textarea>
+          </div>
         </form>
-    </div>
-    <div *ngIf="!this.theEvent['active']">
-        No esta activado
-    </div>
-</div>
-<div class="container" *ngIf="this.saved">
-    Respuesta guardada
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-      <div class="btn-group">
-        <div class="btn btn-primary" mwlCalendarPreviousView [view]="'week'" [(viewDate)]="viewDate">
-          Previous
+        <div class="col-md-8 bg-white">
+          <div class="row col-md-12 p-0">
+            <h4 class="font-weight-bold text-center">
+              Seleccioná las fechas:
+            </h4>
+            <div class="ml-auto">
+              <div class="btn-group">
+                <div class="btn btn-secondary" mwlCalendarPreviousView [view]="'week'" [(viewDate)]="viewDate">
+                  Anterior
+                </div>
+                <div class="btn btn-dark" mwlCalendarToday [(viewDate)]="viewDate">
+                  Hoy
+                </div>
+                <div class="btn btn-secondary" mwlCalendarNextView [view]="'week'" [(viewDate)]="viewDate">
+                  Siguiente
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row col-md-12 p-0">
+            <div class="overflow-auto col-md-12 p-0">
+              <mwl-calendar-week-view [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event)">
+              </mwl-calendar-week-view>
+            </div>
+            <small class="text-danger font-italic d-none" id="datearray">
+              *Debe agregar al menos una fecha
+            </small>
+          </div>
         </div>
-        <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-          Today
-        </div>
-        <div class="btn btn-primary" mwlCalendarNextView [view]="'week'" [(viewDate)]="viewDate">
-          Next
+      </div>
+      <div class="row">
+        <div class="col text-center m-5">
+          <button type="button" class="btn pb_btn-pill" [disabled]="responseForm.invalid || this.loading"
+            (click)="theSubmit()" [ngClass]="(!this.err)?'btn-primary':'btn-danger'">
+            <span *ngIf="!this.loading && !this.err">Enviar respuesta</span>
+            <div class="spinner-border text-dark" role="status" *ngIf="this.loading"></div>
+            <span *ngIf="this.err">Error</span>
+          </button>
         </div>
       </div>
     </div>
-    <div class="col-md-6 text-right">
-      <h3>{{ viewDate | calendarDate:('weekViewTitle') }}</h3>
+  </div>
+  <div class="container">
+    <div class="row" *ngIf="!this.theEvent['active']">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="alert alert-warning text-center" role="alert">
+          <p>Este evento esta deshabilitado</p>
+          <a class="alert-link" [routerLink]="['/']">Ir al inicio</a>.
+        </div>
+      </div>
+      <div class="col-md-3"></div>
     </div>
   </div>
-  <br />
-
-<div [ngSwitch]="view">
-  <mwl-calendar-week-view
-    *ngSwitchCase="'week'"
-    [viewDate]="viewDate"
-    [events]="events"
-    (eventClicked)="eventClicked($event)"
-  >
-  </mwl-calendar-week-view>
+</div>
+<div class="container" *ngIf="this.saved">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="alert alert-success text-center" role="alert">
+        <p>Respuesta guardada</p>
+        <a class="alert-link" [routerLink]="['/']">Ir al inicio</a>.
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
 </div>
