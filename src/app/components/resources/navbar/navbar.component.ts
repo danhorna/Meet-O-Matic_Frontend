@@ -46,7 +46,6 @@ export class NavbarComponent implements OnInit {
   isAdmin() {
     if (this.tokenService.isValid()){
       this.user = this.tokenService.getUser()
-      console.log(this.user)
       if (this.user['roles'].includes('admin')){
         return true
       }

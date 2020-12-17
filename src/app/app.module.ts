@@ -29,6 +29,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import * as $ from 'jquery';
+import { AdmincpComponent } from './components/routes/admincp/admincp.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import * as $ from 'jquery';
     VerifiedComponent,
     PremiumComponent,
     ResultsComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    AdmincpComponent
   ],
   imports: [
     NgxPayPalModule,
