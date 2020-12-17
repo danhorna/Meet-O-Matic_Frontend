@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   TOKEN_KEY:'token',
   USER_KEY:'user',
-  API_BASE_PATH: 'http://127.0.0.1:3000',
+  API_BASE_PATH: 'http://127.0.0.1:8000',
   SITE_URL: 'http://localhost:4200/',
   EVENT_PATH: 'event/',
   NAV_HIDE: ['premium', '404', 'event']

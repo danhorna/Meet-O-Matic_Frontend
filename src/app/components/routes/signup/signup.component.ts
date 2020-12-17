@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   wrong: boolean = false
   loading: boolean = false
   done: boolean = false
+  alrdy: boolean = false
 
   constructor(
     private signupFormBuilder: FormBuilder,
@@ -31,9 +32,10 @@ export class SignupComponent implements OnInit {
   }
 
   remo() {
-    if (this.wrong) {
+    if (this.wrong) 
       this.wrong = false
-    }
+    if (this.alrdy)
+      this.alrdy = false
   }
 
   delayRedirect() {
@@ -63,6 +65,8 @@ export class SignupComponent implements OnInit {
         this.delayRedirect()
       },
         (err) => {
+          if (err['status'] == 409)
+            this.alrdy = true
           this.loading = false
           this.wrong = true
         })

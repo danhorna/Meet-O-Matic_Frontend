@@ -43,6 +43,17 @@ export class NavbarComponent implements OnInit {
     return this.tokenService.isValid()
   }
 
+  isAdmin() {
+    if (this.tokenService.isValid()){
+      this.user = this.tokenService.getUser()
+      console.log(this.user)
+      if (this.user['roles'].includes('admin')){
+        return true
+      }
+    }
+    return false
+  }
+
   logout() {
     this.tokenService.signOut()
     this.activeRouter.navigateByUrl('/')

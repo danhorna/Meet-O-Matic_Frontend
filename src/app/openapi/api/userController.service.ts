@@ -32,7 +32,7 @@ import { Configuration }                                     from '../configurat
 })
 export class UserControllerService {
 
-    protected basePath = 'https://meet-o-matic-backend.herokuapp.com';
+    protected basePath = 'http://localhost:8000';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

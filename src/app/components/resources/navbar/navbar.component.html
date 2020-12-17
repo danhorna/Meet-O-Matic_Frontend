@@ -19,6 +19,9 @@
             <li class="nav-item" *ngIf="isLogged()" [ngClass]="{'active' : isActive('/profile')}">
                 <a class="nav-link" [routerLink]="['/profile']"><i class="fas fa-user-alt"></i>Perfil</a>
             </li>
+            <li class="nav-item" *ngIf="isAdmin()" [ngClass]="{'active' : isActive('/admincp')}">
+                <a class="nav-link" [routerLink]="['/admincp']"><i class="fas fa-user-alt"></i>AdminCP</a>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" *ngIf="!isLogged()" [ngClass]="{'active' : isActive('/login')}">

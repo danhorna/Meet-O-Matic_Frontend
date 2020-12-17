@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [LoggedGuard]},
   { path: 'event/:id', component: EventComponent},
   { path: 'premium', component: PremiumComponent, canActivate: [LoggedGuard]},
+  { path: 'admincp', component: },
   { path: '404', component: NotfoundComponent},
   { path: '**', redirectTo: '/404'}
 ];

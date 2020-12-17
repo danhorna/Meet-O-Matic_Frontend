@@ -162,7 +162,7 @@ export class CreateComponent implements OnInit {
                 this.userController.usereventEventControllerCreate(user.id, toSend).subscribe((res) => {
                   this.eventCreated = res
                   this.created = true
-                  if (this.recipients.length > 0 && !res) {
+                  if (this.recipients.length > 0 && res) {
                     const emailToSend = {
                       recipients: this.recipients,
                       eventurl: environment.SITE_URL + environment.EVENT_PATH + this.eventCreated['id'],

@@ -22,6 +22,13 @@
                     <input type="email" class="form-control pb_height-50 reverse" id="email" placeholder="Email"
                         formControlName="email" (input)="remo()">
                 </div>
+                <div *ngIf="this.alrdy">
+                    <p>
+                        <small class="text-danger font-italic">
+                            Email en uso
+                        </small>
+                    </p>
+                </div>
                 <div *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched">
                     <p>
                         <small class="text-danger font-italic">
