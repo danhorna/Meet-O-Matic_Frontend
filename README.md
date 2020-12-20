@@ -1,27 +1,41 @@
-# Frontend
+Este proyecto es para el curso de Ingenieria de Aplicaciones Web 2020.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.1.
+## Sobre la aplicacion
 
-## Development server
+Se va a diseñar e implementar una app para la coordinacion de reuniones(Date Matchers).<br />
+Paginas similares: [Dudle](https://dudle.inf.tu-dresden.de/) & [LetsMeetOn](https://letsmeeton.com/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## ¿Cómo funciona?
 
-## Code scaffolding
+El coordinador de la reunión propone un conjunto de días y horarios para un evento, una vez confirmado se le otorga un link el cual 
+puede usar para distribuirlo entre sus contactos.<br />
+Luego, cada invitado puede seleccionar cual/es dia/s puede asistir a la reunion.<br />
+Además, el coordinador de una reunion es capaz de revisar un resumen de las respuestas.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Características adicionales
 
-## Build
+- **Las reuniones puede ser creadas sin necesidad de estar registrado**<br />
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+En este caso, al confirmar el evento, se otorgan dos links
 
-## Running unit tests
+1. Link para distribuir (Se debe generar una clave privada).<br />
+2. Link para visualizar resultados.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Es posible registrarse en el sitio** <br />
+Ésto es de utilidad para poder ver y administrar los eventos creados.<br />
+Se podrá ver la cantidad de respuestas, además de poder desactivar el formulario y/o clonarlo.<br />
+En principio solo se pueden tener asociados 10 formularios.
 
-## Running end-to-end tests
+- **Existe un usuario administrador** <br />
+Es capaz de realizar tareas de mantenimiento, por ej: acceder a la lista de usuarios y formularios.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Implementaciones adicionales
 
-## Further help
+- **Integración con plataformas single sign on** <br />
+Por ej: Auth0.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **Integración con medio de pago**<br />
+Para lograr un plan corporativo en el cual es posible ampliar la cantidad de formularios creados. MercadoPago.
+
+- **Integración con plataforma para el envio de correo**<br />
+Utilizando el servidor de correos de Gmail mediante el protocolo IMAP
